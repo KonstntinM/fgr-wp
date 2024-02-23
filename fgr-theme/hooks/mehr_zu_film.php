@@ -26,7 +26,7 @@ function mehr_zu_film()
         'orderby' => 'date',
         'order' => 'DESC',
         'meta_query' => $meta_query,
-        'post__not_in' => array(get_the_ID())
+        // 'post__not_in' => array(get_the_ID())
     );
 
     $query = new WP_Query($args);
