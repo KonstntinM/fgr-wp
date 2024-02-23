@@ -2,6 +2,7 @@
 
 include get_theme_file_path('/hooks/mehr_zu_film.php');
 include get_theme_file_path('/hooks/artikel_zu_film.php');
+include get_theme_file_path('/hooks/viral-news-search-icon.php');
 
 /**
  * Enqueue scripts and styles of parent theme

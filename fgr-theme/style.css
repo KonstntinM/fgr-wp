@@ -3,6 +3,7 @@
  * Template: viral-news
  * Author: Konstantin Marx
  * Author URI: https://github.com/KonstntinM
+ * Version: 1.1
  */
 
 #vn-site-branding img{
@@ -127,4 +128,40 @@
     line-height: 1.5;
     color: #d2d6dc;
     max-width: 36rem;
+}
+
+/* Language flags */
+
+.fgr-right-header {
+	text-align: right;
+    font-size: 24px;
+	width: 260px;
+}
+
+.fgr-lang-menu-mobile {
+	gap: 10px;
+	align-items: center;
+	display: none;
+}
+
+@media screen and (max-width: 768px){
+    .fgr-lang-menu-mobile {
+		display: inline-flex;
+	}
+}
+
+@media screen and (max-width: 768px){
+    .fgr-right-header {
+		display: none;
+	}
+	
+}
+
+.vn-header-search {
+	width: fit-content !important;
+}
+
+.tp-language-name {
+	text-transform: uppercase;
+	font-size: 20px;
 }
