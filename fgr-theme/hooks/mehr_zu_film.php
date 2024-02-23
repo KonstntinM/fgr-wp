@@ -26,7 +26,6 @@ function mehr_zu_film()
         'orderby' => 'date',
         'order' => 'DESC',
         'meta_query' => $meta_query,
-        // 'post__not_in' => array(get_the_ID())
     );
 
     $query = new WP_Query($args);
@@ -39,10 +38,10 @@ function mehr_zu_film()
 
     <nav class="navigation post-navigation" role="navigation" style="padding-top: 1.5rem; padding-bottom: 1.5rem;">
         <h3>
-            Mehr zu
+            Mehr über 
             <?php
             if (count($films) == 1) {
-                echo '<a href="' . get_permalink($films[0]) . '" style="font-weight: bold;">' . get_the_title($films[0]) . '</a>';
+                echo '<a href="' . get_permalink($films[0]) . '" style="font-weight: bold; text-decoration: underline;">' . get_the_title($films[0]) . '</a>';
             } elseif (count($films) > 3) {
                 echo 'Mehr zu diesen Filmen.';
             } else {
