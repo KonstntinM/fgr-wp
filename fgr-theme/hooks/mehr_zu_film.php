@@ -38,14 +38,14 @@ function mehr_zu_film()
 
     <nav class="navigation post-navigation" role="navigation" style="padding-top: 1.5rem; padding-bottom: 1.5rem;">
         <h3>
-            Mehr über 
             <?php
             if (count($films) == 1) {
-                echo '<a href="' . get_permalink($films[0]) . '" style="font-weight: bold; text-decoration: underline;">' . get_the_title($films[0]) . '</a>';
-            } elseif (count($films) > 3) {
+                echo 'Mehr über <a href="' . get_permalink($films[0]) . '" style="font-weight: bold; text-decoration: underline;">' . get_the_title($films[0]) . '</a>';
+            } elseif (count($films) > 5) {
                 echo 'Mehr zu diesen Filmen.';
             } else {
                 $index = 0;
+                echo 'Mehr über ';
                 foreach ($films as $film_id) {
                     echo '<a href="' . get_permalink($film_id) . '" style="font-weight: bold;">' . get_the_title($film_id) . '</a>';
                     if ($index < count($films) - 2) {
