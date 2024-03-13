@@ -60,13 +60,12 @@
     justify-content: flex-end;
     overflow: hidden;
     gap: 0.5rem;
-    height: 50vh;
 	margin-bottom: 5rem;
 }
 
 /* For the Image */
 .film-header-container img {
-    position: absolute;
+    position: relative;
     top: 0;
     right: 0;
 }
@@ -101,7 +100,7 @@
 }
 
 .film-info {
-	position: relative;
+	position: absolute;
 
 	bottom: 0;
     z-index: 10;
