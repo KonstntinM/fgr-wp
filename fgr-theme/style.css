@@ -168,3 +168,7 @@
 .wp-block-latest-posts__post-title {
 	font-weight:bold;
 }
+
+.posted-on > a:not(:hover) {
+	color: inherit !important;
+}

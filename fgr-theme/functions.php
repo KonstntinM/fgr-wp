@@ -5,6 +5,8 @@ include get_theme_file_path('/hooks/artikel_zu_film.php');
 include get_theme_file_path('/functions/viral-news-search-icon.php');
 include get_theme_file_path('/functions/viral-news-social-links.php');
 include get_theme_file_path('/functions/viral-news-post-date.php');
+include get_theme_file_path('/functions/viral-news-posted-on.php');
+include get_theme_file_path('/functions/helpers/the_authors.php');
 
 /**
  * Enqueue scripts and styles of parent theme
