@@ -11,9 +11,9 @@ services:
       WORDPRESS_DB_PASSWORD: <your_mysql_user_password>
       debug: "true"
     volumes:
-      - ./:/var/www/html/ 
-      - C:/Users/konst/Desktop/fgr-dev/fgr-theme:/var/www/html/wp-content/themes/fgr-theme
-      - C:/Users/konst/Desktop/fgr-dev/fgr-plugin:/var/www/html/wp-content/plugins/fgr-plugin
+      # - ./:/var/www/html/ 
+      - ./../fgr-theme:/var/www/html/wp-content/themes/fgr-theme
+      - ./../fgr-plugin:/var/www/html/wp-content/plugins/fgr-plugin
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
 
 
