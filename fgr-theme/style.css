@@ -172,3 +172,60 @@
 .posted-on > a:not(:hover) {
 	color: inherit !important;
 }
+
+/* Film Widget */
+
+.film-widget-container {
+	position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    gap: 0.5rem;
+	margin-bottom: 5rem;
+	min-height: 30vh
+}
+
+.film-widget-container img {
+	top: 0;
+	right: 0;
+	object-fit: cover;
+	object-position: center;
+	height: 100%;
+	position: absolute;
+}
+
+.widget-film-info {
+	position: absolute;
+	bottom: 0;
+    z-index: 10;
+    color: #fff;
+    max-width: 24rem;
+	margin: 0px 0px 0.6rem 2rem;
+}
+
+.widget-film-title {
+	
+    font-size: 3rem;
+    font-weight: 700;
+    color: #fff;
+	margin-bottom: 0px;
+	line-height: 1.1;
+	margin-bottom: 0.5rem;
+}
+
+
+.film-widget-container:hover .widget-film-info {
+	opacity: 50%;
+	transition: opacity .2s ease-out;
+}
+
+.film-widget-container:not(:hover) .widget-film-info {
+	opacity: 100%;
+	transition: opacity .2s ease-out;
+}
+
+.widget-film-info {
+	cursor: pointer;
+}
