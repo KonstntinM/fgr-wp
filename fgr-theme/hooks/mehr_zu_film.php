@@ -40,7 +40,7 @@ function mehr_zu_film()
         <h3>
             <?php
             if (count($films) == 1) {
-                echo 'Mehr über <a href="' . get_permalink($films[0]) . '" style="font-weight: bold; text-decoration: underline;">' . get_the_title($films[0]) . '</a>';
+                echo 'Mehr über <a href="' . get_permalink($films[0]) . '" style="font-weight: bold;">' . get_the_title($films[0]) . '</a>';
             } elseif (count($films) > 5) {
                 echo 'Mehr zu diesen Filmen.';
             } else {
@@ -92,6 +92,15 @@ function mehr_zu_film()
         <?php
         }
         echo '</div>';
+
+        if (count($films) == 1) {
+            echo '<div style="margin-top: 2rem; margin-bottom: 1rem;">';
+            echo '<a href="' . get_permalink($films[0]) . '" title="Alle Infos zu diesem Film" style="background-color: #0078af !important; border-radius: 20px; padding-top: 5px; padding-bottom: 5px; padding-left: 15px; padding-right: 15px; width: fit-content; height: fit-content; text-decoration: none; color: #ffffff !important; display: block; font-size: 16px;">';
+            echo '<span>Alle Infos zu diesem Film</span>';
+            echo '</a>';
+            echo '</div>';
+        }
+
         wp_reset_postdata();
 
         ?>
