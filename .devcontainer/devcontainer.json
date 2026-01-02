@@ -1,0 +1,13 @@
+{
+  "name": "De_Generation-Reports",
+
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "wordpress",
+  "forwardPorts": [80, 8080],
+
+  "workspaceFolder": "/var/ide",
+
+  "remoteUser": "developer",
+  "updateRemoteUserUID": true,
+  "postCreateCommand": "sh .devcontainer/wordpress-container-setup.sh"
+}
