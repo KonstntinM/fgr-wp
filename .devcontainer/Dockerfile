@@ -106,4 +106,5 @@ RUN chmod g+w -R /var/www/html/
 # Create a development user and grant access
 RUN useradd -m -u 1000 developer && usermod -aG www-data developer
 
-CMD ["apache2-foreground"]
+# Allow rewrites
+RUN a2enmod rewrite
