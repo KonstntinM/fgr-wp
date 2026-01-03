@@ -13,6 +13,7 @@ services:
       WORDPRESS_DEBUG: 1
     volumes:
       - wordpress:/var/www/html
+      - ../fgr-theme:/var/www/html/wp-content/themes/fgr-theme
 
   db:
     image: mariadb:11.5
