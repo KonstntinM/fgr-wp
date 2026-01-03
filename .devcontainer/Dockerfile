@@ -108,3 +108,7 @@ RUN useradd -m -u 1000 developer && usermod -aG www-data developer
 
 # Allow rewrites
 RUN a2enmod rewrite
+
+# Listen on both port 80 and 8080 to enable internal calls
+RUN echo "Listen 8080" >> /etc/apache2/ports.conf
+RUN sed -i 's/<VirtualHost \*:80>/<VirtualHost *:80 *:8080>/' /etc/apache2/sites-available/000-default.conf
