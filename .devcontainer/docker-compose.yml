@@ -14,6 +14,9 @@ services:
     volumes:
       - wordpress:/var/www/html
       - ../fgr-theme:/var/www/html/wp-content/themes/fgr-theme
+      - ../tp-wpml-migration-plugin:/var/www/html/wp-content/plugins/tp-wpml-migration-plugin
+    networks:
+      - fgr-network
 
   db:
     image: mariadb:11.5
@@ -26,6 +29,11 @@ services:
       - 3306:3306
     volumes:
       - data:/var/lib/mysql
+    networks:
+      - fgr-network
+
+networks:
+  fgr-network:
 
 volumes:
   wordpress:
