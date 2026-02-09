@@ -2,104 +2,136 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 
 (async () => {
-    // Launch Puppeteer in headless mode
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
+    console.log('--- Berlinale Scraper Started ---');
 
-    // URL for the Berlinale Generation list page
-    const listUrl = 'https://www.berlinale.de/de/programm/berlinale-programm.html/f=52/o=asc/p=2/rp=25?page=2&film_nums=23&searchText=&day_id=&section_id=52&distributor=&cinema_id=&country_id=&date_id=&time_id=&genre=&documentary=&order_by=1&screenings=efm_festival';
-    await page.goto(listUrl, { waitUntil: 'networkidle2' });
-
-    // Extract film detail page links using the new selector
-    const filmLinks = await page.evaluate(() => {
-        // Select all links with the new class
-        const anchors = Array.from(document.querySelectorAll('a.c-program-item__link'));
-        // Map to full URLs by checking if the href is relative
-        return anchors
-            .map(a => {
-                const href = a.getAttribute('href');
-                // Prepend Berlinale domain if URL is relative
-                return href.startsWith('http') ? href : 'https://www.berlinale.de' + href;
-            })
-            // Remove duplicates if any
-            .filter((value, index, self) => self.indexOf(value) === index);
+    const browser = await puppeteer.launch({
+        headless: true,
+        executablePath: '/usr/bin/chromium',
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--window-size=1920,1080'
+        ]
     });
-    console.log(`Found ${filmLinks.length} film links.`);
 
-    const films = [];
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1920, height: 1080 });
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
 
-    // Process each film detail page
-    for (const filmUrl of filmLinks) {
-        console.log(`Processing film: ${filmUrl}`);
-        const filmPage = await browser.newPage();
-        await filmPage.goto(filmUrl, { waitUntil: 'networkidle2' });
+    // --- COOKIE INJECTION ---
+    await page.setCookie({
+        name: 'ifb-cookie-consent',
+        value: '%7B%22necessary%22:true%7D',
+        domain: '.berlinale.de',
+        path: '/',
+        secure: true
+    });
 
-        const filmData = await filmPage.evaluate(() => {
-            // Helper function: safely extract innerText from an element
-            const getText = selector => {
-                const el = document.querySelector(selector);
-                return el ? el.innerText.trim() : '';
-            };
+    const allFilmLinks = new Set();
+    let currentPage = 1;
+    let hasMorePages = true;
 
-            // --- Title ---
-            // Assume the title is in an <h1> element
-            // --- Title ---
-            const titleEl = document.querySelector('h1');
-            const title = titleEl ? titleEl.innerText.trim() : '';
+    // --- STEP 1: PAGINATION LOOP ---
+    console.log('Step 1: Gathering all film links across pages...');
 
-            // --- Section ---
-            // Look for any text element that contains "Generation", then remove any year
-            let section = '';
-            const sectionEl = document.querySelector('.c-section-label__text');
-            if (sectionEl) {
-                section = sectionEl.innerText.trim();
-            }
+    while (hasMorePages) {
+        const listUrl = `https://www.berlinale.de/de/programm/berlinale-programm.html/f=52/o=asc/rp=25?page=${currentPage}&section_id=52&screenings=efm_festival`;
 
-            // --- Image ---
-            // Pick the first image with "media/filmstills" in its src for the high‑resolution image
-            let image = '';
-            const imgs = Array.from(document.querySelectorAll('img'));
-            const filmImg = imgs.find(img => img.src.includes('media/filmstills'));
-            if (filmImg) {
-                image = filmImg.src;
-            } else if (imgs.length) {
-                image = imgs[0].src;
-            }
+        console.log(`Checking Page ${currentPage}...`);
+        await page.goto(listUrl, { waitUntil: 'networkidle2', timeout: 60000 });
 
-            // --- Description ---
-            // Try several common selectors; fallback to the first <p> element if none match.
-            let description = '';
-            const descContainer = document.querySelector('div.c-stage-content__content > p')
-            if (descContainer) {
-                description = descContainer.innerText.trim();
-            }
+        const content = await page.content();
 
-            // --- Director ---
-            // Locate an element containing the word "von" and extract the text after it.
-            let director = '';
-            const xpathExpression = '//li[span[@class="c-table__list-label" and normalize-space(text())="Regie"]]//ul[contains(@class,"c-table__list--inner")]//li//strong';
-            const result = document.evaluate(xpathExpression, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-            if (result.singleNodeValue) {
-                director = result.singleNodeValue.textContent.trim();
-            }
+        // Check for the "No Results" message
+        if (content.includes("Ihre Suche hat keine Ergebnisse erzielt.")) {
+            console.log(`Reached the end at page ${currentPage}.`);
+            hasMorePages = false;
+            break;
+        }
 
-            return {
-                title,
-                description,
-                image,
-                section,
-                director,
-                link: window.location.href
-            };
+        // Extract links using your requested regex method
+        const linksOnPage = await page.evaluate(() => {
+            return Array.from(document.querySelectorAll('a[href*="/programm/"]'))
+                .map(a => a.href)
+                .filter(href => /\d{9,}/.test(href));
         });
 
-        films.push(filmData);
-        await filmPage.close();
+        if (linksOnPage.length === 0) {
+            hasMorePages = false;
+        } else {
+            linksOnPage.forEach(link => allFilmLinks.add(link));
+            console.log(`Added ${linksOnPage.length} links from page ${currentPage}.`);
+            currentPage++;
+            // Small delay to be polite during pagination
+            await new Promise(r => setTimeout(r, 100));
+        }
     }
 
-    // Write the film data to films.json with proper formatting.
+    console.log(`Step 2: Starting scrape for ${allFilmLinks.size} unique films.`);
+
+    // --- STEP 2: SCRAPE INDIVIDUAL FILMS ---
+    const films = [];
+    const uniqueLinksArray = Array.from(allFilmLinks);
+
+    for (const filmUrl of uniqueLinksArray) {
+        console.log(`Scraping: ${filmUrl}`);
+        const filmPage = await browser.newPage();
+
+        let filmData = {
+            link: filmUrl,
+            title: '',
+            title_de: '',
+            section: '',
+            description: '',
+            description_en: '',
+            director: '',
+            image: ''
+        };
+
+        try {
+            // 1. Scrape German Page
+            await filmPage.goto(filmUrl, { waitUntil: 'networkidle2' });
+            const dataDe = await filmPage.evaluate(() => ({
+                title_original: document.querySelector('h1')?.innerText.trim() || '',
+                title_de_en: document.querySelector('.ft__other-title')?.innerText.trim() || '',
+                section: document.querySelector('.section-tag')?.innerText.trim() || '',
+                description: document.querySelector('#ds-readmoreItem')?.innerText.trim() || '',
+                director: Array.from(document.querySelectorAll('strong, span')).find(el => el.innerText.includes('von '))?.innerText.replace('von ', '').trim() || '',
+                image: document.querySelector('img[src*="filmstills"]')?.src || ''
+            }));
+
+            filmData = { ...filmData, ...dataDe };
+
+            // 2. Generate and Scrape English Page
+            const enUrl = filmUrl.replace('/de/', '/en/').replace('/programm/', '/programme/');
+            filmData.link_en = enUrl;
+
+            await filmPage.goto(enUrl, { waitUntil: 'networkidle2' });
+            const descEn = await filmPage.evaluate(() => {
+                return document.querySelector('#ds-readmoreItem')?.innerText.trim() || '';
+            });
+
+            filmData.description_en = descEn;
+            films.push(filmData);
+
+        } catch (e) {
+            console.error(`Error scraping ${filmUrl}: ${e.message}`);
+            if (filmData.title) films.push(filmData);
+        }
+
+        await filmPage.close();
+        await new Promise(r => setTimeout(r, 500));
+
+        // Optional: Remove or adjust the test break below to scrape everything
+        if (films.length >= 10) {
+            //console.log("Stopping at 10 films for testing purposes.");
+            //break;
+        }
+    }
+
     fs.writeFileSync('./films.json', JSON.stringify(films, null, 2));
-    console.log(`Saved ${films.length} films to films.json`);
+    console.log(`Success! Saved ${films.length} films to films.json.`);
 
     await browser.close();
 })();

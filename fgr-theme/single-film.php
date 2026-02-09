@@ -4,6 +4,8 @@
  * @package Viral News
  */
 get_header();
+
+
 ?>
 
 <div class="vn-container fgr_film">
@@ -20,7 +22,7 @@ get_header();
                 <div class="film-header-gradient"> </div>
                 <div class="film-info">
                     <div class="film-labels">
-                        <?php 
+                        <?php
                             // Get Film Section
                             $film_section = get_the_terms($post->ID, 'section');
                             if ($film_section) {
@@ -37,8 +39,8 @@ get_header();
                     <div>
                         <?php
                             $film_director = get_post_meta($post->ID, 'director', true);
-                            if ($film_director) {
-                                echo '<p class="film-director">' . 'By ' . $film_director . '</p>';
+                        if ($film_director) {
+                                echo '<p class="film-director">' . __('By', 'fgr-by') . ' ' . $film_director . '</p>';
                             }
                         ?>
                     </div>
@@ -55,7 +57,7 @@ get_header();
                     <?php
                         $link = get_post_meta($post->ID, 'berlinale_link', true);
                         if ($link) {
-                            echo '<a href="' . $link . '" target="_blank">Mehr Informationen auf der Berlinale-Website</a>';
+                            echo '<a href="' . $link . '" target="_blank">' . __('More details on the Berlinale website','fgr-theme') . '</a>';
                         }
                     ?>
                 </p>
@@ -73,7 +75,7 @@ get_header();
 
             <?php get_sidebar(); ?>
         </div>
-    <?php endwhile; // End of the loop. 
+    <?php endwhile; // End of the loop.
     ?>
 </div>
 <?php

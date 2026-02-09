@@ -14,16 +14,7 @@ function fgr_the_authors() {
             if ($i < count($authors) - 2) {
                 $authors_string .= ', ';
             } elseif ($i == count($authors) - 2) {
-                if (function_exists('get_locale')) {
-                    $locale = get_locale(); 
-                    if ($locale == 'de_DE') {
-                        $authors_string .= ' und ';
-                    } else {
-                        $authors_string .= ' and ';
-                    }
-                } else {
-                    $authors_string .= ' and ';
-                }
+                $authors_string .=  ' ' . __('and', 'fgr-theme') . ' ';
             }
         }
 

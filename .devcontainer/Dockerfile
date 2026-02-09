@@ -106,9 +106,18 @@ RUN chmod g+w -R /var/www/html/
 # Create a development user and grant access
 RUN useradd -m -u 1000 developer && usermod -aG www-data developer
 
-# Allow rewrites
-RUN a2enmod rewrite
-
 # Listen on both port 80 and 8080 to enable internal calls
 RUN echo "Listen 8080" >> /etc/apache2/ports.conf
 RUN sed -i 's/<VirtualHost \*:80>/<VirtualHost *:80 *:8080>/' /etc/apache2/sites-available/000-default.conf
+
+# Install sudo
+RUN apt-get update && apt-get install -y --no-install-recommends sudo
+
+# Grant the developer user sudo privileges
+RUN echo "developer ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Ensure the base directory has the correct group ownership before volumes mount
+RUN chown -R developer:www-data /var/www/html
+
+# Allow rewrites
+RUN a2enmod rewrite

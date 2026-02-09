@@ -1,0 +1,107 @@
+/* Film Seite */
+.fgr_film_thumbnail {
+    width: 100%;
+    height: auto;
+}
+
+/* For the main div */
+.film-header-container {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    gap: 0.5rem;
+    margin-bottom: 5rem;
+}
+
+/* For the Image */
+.film-header-container img {
+    position: relative;
+    top: 0;
+    right: 0;
+}
+
+/* For the gradient div */
+.film-header-gradient {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(to top, #1f1f1f 0%, rgba(31, 31, 31, 0.2) 45%);
+}
+
+/* For the label div */
+.film-section {
+    display: block;
+    background: #F0F0F0;
+    color: #0E0E0E;
+    font-size: 15px;
+    padding: 4px 6px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    width: fit-content;
+}
+
+.film-labels {
+    display: flex;
+    gap: 10px;
+}
+
+.film-info {
+    position: absolute;
+
+    bottom: 0;
+    z-index: 10;
+    color: #fff;
+    max-width: 24rem;
+    margin: 0px 0px 2rem 3rem;
+}
+
+@media screen and (max-width: 650px) {
+    .film-info {
+        position: relative;
+        margin: 1rem 0 0 0;
+        color: black !important;
+    }
+
+    .film-director {
+        margin-bottom: 0;
+    }
+
+    .film-section {
+        background: #0E0E0E;
+        color: #F0F0F0;
+    }
+
+    .film-header-gradient {
+        background: unset;
+    }
+
+    .film-header-container {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* For the h3 */
+.film-title {
+
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0px;
+}
+
+/* For the description div */
+.film-description {
+    z-index: 10;
+    gap: 0.25rem;
+    overflow: hidden;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #d2d6dc;
+    max-width: 36rem;
+}

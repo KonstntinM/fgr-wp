@@ -40,18 +40,18 @@ function mehr_zu_film()
         <h3>
             <?php
             if (count($films) == 1) {
-                echo 'Mehr über <a href="' . get_permalink($films[0]) . '" style="font-weight: bold;">' . get_the_title($films[0]) . '</a>';
+                echo __('More about', 'fgr-theme') . ' <a href="' . get_permalink($films[0]) . '" style="font-weight: bold;">' . get_the_title($films[0]) . '</a>';
             } elseif (count($films) > 5) {
-                echo 'Mehr zu diesen Filmen.';
+                _e('More about these Films', 'fgr-theme');
             } else {
                 $index = 0;
-                echo 'Mehr über ';
+                _e('More about', 'fgr-theme');
                 foreach ($films as $film_id) {
-                    echo '<a href="' . get_permalink($film_id) . '" style="font-weight: bold;">' . get_the_title($film_id) . '</a>';
+                    echo ' <a href="' . get_permalink($film_id) . '" style="font-weight: bold;">' . get_the_title($film_id) . '</a>';
                     if ($index < count($films) - 2) {
                         echo ', ';
                     } elseif ($index == count($films) - 2) {
-                        echo ' und ';
+                        echo ' ' . __('and', 'fgr-theme') . ' ';
                     }
                     $index++;
                 }
@@ -96,7 +96,7 @@ function mehr_zu_film()
         if (count($films) == 1) {
             echo '<div style="margin-top: 2rem; margin-bottom: 1rem;">';
             echo '<a href="' . get_permalink($films[0]) . '" title="Alle Infos zu diesem Film" style="background-color: #0078af !important; border-radius: 20px; padding-top: 5px; padding-bottom: 5px; padding-left: 15px; padding-right: 15px; width: fit-content; height: fit-content; text-decoration: none; color: #ffffff !important; display: block; font-size: 16px;">';
-            echo '<span>Alle Infos zu diesem Film</span>';
+            echo '<span>' . __('All details about this film', 'fgr-theme') . '</span>';
             echo '</a>';
             echo '</div>';
         }

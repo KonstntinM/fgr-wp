@@ -1,5 +1,10 @@
 echo "✨ Starting WP-Container-Setup Script"
 
+# Change ownership of the current directory to the developer user
+sudo chown -R developer:www-data /var/www/html
+# Set permissions so the group (www-data) can also write to files
+chmod -R 775 /var/www/html
+
 cd /var/www/html || exit
 
 # Global Site Config

@@ -74,9 +74,7 @@
                             <span <?php echo viral_news_amp_search_toggle(); ?>><i class="mdi-magnify"></i></span>
                         </div>
                         <div class="fgr-lang-menu-mobile" data-no-translation>
-                            <div class="wpml-floating-language-switcher">
-                                <?php do_action('wpml_add_language_selector'); ?>
-                            </div>
+                            <?php get_template_part('template-parts/language-switcher-links'); ?>
                         </div>
 
                         <span class="vn-toggle-menu" aria-expanded="false" <?php viral_news_amp_menu_toggle(); ?>><span></span></span>
@@ -100,6 +98,9 @@
                     <div class="vn-container">
                         <div class="vn-header-search">
                             <span <?php echo viral_news_amp_search_toggle(); ?>><i class="mdi-magnify"></i></span>
+                        </div>
+                        <div class="fgr-lang-menu-mobile" data-no-translation>
+                            <?php get_template_part('template-parts/language-switcher-links'); ?>
                         </div>
 
                         <a href="#" class="vn-toggle-menu"><span></span></a>

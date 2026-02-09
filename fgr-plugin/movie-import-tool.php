@@ -12,15 +12,15 @@ function fgr_film_import_menu() {
 add_action('admin_menu', 'fgr_film_import_menu');
 
 function fgr_film_import_tool() {
-    /*
-     * Disable to prevent accidental usage
+var_dump("hey");
+    /* Disable to prevent accidental usage
      * if (isset($_POST['import'])) {
-        import_from_berlinale_string();
-    }
+       import_from_berlinale_string();
+   }
 
-    if (isset($_POST['adjust_legacy'])) {
-        adjust_legacy_posts();
-    }*/
+       if (isset($_POST['adjust_legacy'])) {
+
+       }*/
 
 
 
@@ -30,7 +30,7 @@ function fgr_film_import_tool() {
     echo '<form method="post">';
     //echo '<textarea name="text_input" rows="10" cols="30"></textarea><br>';
     echo '<textarea name="text_input" rows="10" cols="30" value="Dummy" style="display: none;"></textarea><br>';
-    echo '<input type="submit" name="import" value="Import 2025">';
+    echo '<input type="submit" name="import" value="Import 2026">';
     echo '</form>';
     echo '<form method="post">';
     //echo '<textarea name="text_input" rows="10" cols="30"></textarea><br>';
@@ -89,418 +89,728 @@ function adjust_legacy_posts () {
     }
 }
 
-function import_from_berlinale_string () {
-            // Process the text input
-        //$text_input = sanitize_textarea_field($_POST['text_input']);
-        // $text_input = '{"films": ' . $text_input . '}'; // Wrap the input in '{"films": ...}
+function import_from_berlinale_string() {
+    var_dump("from berlinale strings");
+    // 1. DATA PREPARATION
+    // $text_input = sanitize_textarea_field($_POST['text_input']);
+    $text_input = '
+    [
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202612319.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Als sein bester Freund sich auf einer Schulbusfahrt entscheidet, woanders zu sitzen, bricht in Agastya ein stiller Sturm aus unterdrückten Emotionen, Identitätsfragen und Schuldgefühlen los.",
+    "description_en": "On a school bus ride that feels both endless and fleeting, Agastya wrestles with identity, guilt and unspoken emotions when his best friend chooses to sit elsewhere.",
+    "director": "Amay Mehrishi | mit Advay Pradhan, Arsh Victor Suri, Anvishaa Tyagi, Ira Chitalia, Supriya Sawant",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202612319_1_RWD_1380.jpg",
+    "title_original": "Abracadabra",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202612319.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202609628.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Im dürren Hinterland Brasiliens spielen Mädchen miteinander. Sie wissen um die schwierige Vergangenheit ihrer Mütter und hegen kühne Zukunftsträume. Wo Männer gegenüber Frauen noch als Riesen gelten, überschreiten sie die Schwelle von Kindheit zu Jugend.",
+    "description_en": "In the arid Brazilian hinterland, girls play poised between their mothers’ difficult pasts and fantastic dreams for the future. In a place where men are still seen as giants compared to women, the girls cross the threshold from childhood into adolescence.",
+    "director": "Eliza Capai",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202609628_1_RWD_1380.jpg",
+    "title_original": "A Fabulosa Máquina do Tempo",
+    "title_de_en": "The Fabulous Time Machine | Die fabelhafte Zeitmaschine",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202609628.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202616575.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Zwischen den Fronten der Scheidung ihrer Eltern werden Nina und Eli aufgerieben zwischen Loyalität, Wut und dem Wunsch, gesehen zu werden. In sich spiegelnden Perspektiven zeigt ihre Geschichte, wie Liebe zerbrechen und dennoch ihren Weg finden kann.",
+    "description_en": "Caught in the crossfire of their parents’ divorce, Nina and Eli are torn between loyalty, anger and a longing to be seen. Through their mirrored perspectives the same story unfolds, revealing how love can fracture and still find its way home.",
+    "director": "Mees Peijnenburg | mit Finn Vogels, Celeste Holsheimer, Carice van Houten, Pieter Embrechts",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202616575_1_RWD_1380.jpg",
+    "title_original": "A Family",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202616575.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202607400.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Am Stadtrand von Lima kümmert sich der elfjährige Chito um Brieftauben, die sein Bruder für Drogengeschäfte nutzt. Chitos Kindheit zerbricht an Gewalt, doch Trauer und eine zarte Geste der Menschlichkeit öffnen ihm den Weg in ein anderes Leben.",
+    "description_en": "In the outskirts of Lima, eleven-year-old Chito cares for the carrier pigeons used in his brother’s drug trade. After violence shatters his childhood, grief and a tender gesture of humanity open the possibility of another destiny.",
+    "director": "Roddy Dextre | mit Ransés Naranjo Franco, Gabriel Merino Dorival, Kenyi Farfán Baique, Santiago Solórzano Zevallos",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202607400_1_RWD_1380.jpg",
+    "title_original": "Allá en el cielo",
+    "title_de_en": "Nobody Knows the World",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202607400.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202607554.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Nachdem er versehentlich zwei rechte Schuhe gekauft hat, macht sich der zehnjährige Filip auf den Weg übers Land, um den fehlenden linken Schuh zu finden. Eine überraschende Reise voller Mut, Freundschaft und Selbstentdeckung.",
+    "description_en": "After mistakenly buying two right-footed shoes, ten-year-old Filip sets off across the countryside to find the missing left one. An unexpected journey of courage, friendship and self-discovery.",
+    "director": "Paul Negoescu | mit Matei Donciu, Johanna Mild, Călin Petru, Sofia Marinescu, Marin Grigore",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202607554_1_RWD_1380.jpg",
+    "title_original": "Atlasul universului",
+    "title_de_en": "Atlas of the Universe | Atlas des Universums",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202607554.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202616170.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Als an einer Landstraße im Dschungel eine Laterne aufleuchtet, dreht eine Gruppe von Insekten völlig durch. Das kommt den hungrigen Fledermäusen aus einer Höhle in der Nähe sehr gelegen.",
+    "description_en": "When a streetlamp lights up on a country road in the jungle, a group of insects goes crazy – which proves to be handy for the hungry bats in a nearby cave.",
+    "director": "Lena von Döhren",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202616170_1_RWD_1380.jpg",
+    "title_original": "Bats & Bugs",
+    "title_de_en": "Nachtschwärmer",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202616170.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202606248.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Die nerdige Luthando erwartet ein gewöhnliches Schuljahr an einem renommierten Internat, das sie dank eines Stipendiums besucht. Bis eine neue Mitschülerin unterdrückte Sehnsüchte weckt, die Luthandos Selbstbild und Beziehungen auf die Probe stellen.",
+    "description_en": "Adorkable Luthando is on track for an ordinary year at the prestigious boarding school she attends on scholarship – until the arrival of a new girl in her class ignites Luthando’s suppressed desires and threatens her self-image and relationships.",
+    "director": "Sandulela Asanda | mit Esihle Ndleleni, Muadi Ilung",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202606248_1_RWD_1380.jpg",
+    "title_original": "Black Burns Fast",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202606248.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202612404.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Als Camille, eine Jugendliche mit Down-Syndrom, an einem Vortanzen teilnimmt, spürt ihre Schwester Agathe die stille Grausamkeit von Vorurteilen – und die bedingungslose Liebe, die dagegen aufbegehrt.",
+    "description_en": "When Camille, a teenager with Down’s syndrome, auditions for a dance troupe, her sister Agathe discovers the quiet cruelty of prejudice – and the fierce love that fights back.",
+    "director": "Zoé Pelchat | mit Florence Saint-Yves, Anne Florence, Stéphane Jacques, Pascale Desrochers, Alexandre Bergeron",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202612404_1_RWD_1380.jpg",
+    "title_original": "C’est ma sœur",
+    "title_de_en": "That’s My Sister",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202612404.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202604753.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "La Maestra und Paula sind unzertrennliche Freundinnen und die besten Schwimmerinnen ihres Teams. Ein Vorfall auf einer Party zwingt sie, sich zwischen Schweigen und Sprechen zu entscheiden – eine Belastungsprobe für ihre Freundschaft.",
+    "description_en": "La Maestra and Paula are inseparable friends and the strongest swimmers on their team, until an incident at a party forces them to choose between silence and speaking out, testing the limits of their friendship.",
+    "director": "Fernanda Tovar | mit Rocio Guzmán, Darana Álvarez, Tatsumi Milori, Tomás García Agraz, Mónica del Carmen",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202604753_1_RWD_1380.jpg",
+    "title_original": "Chicas Tristes",
+    "title_de_en": "Sad Girlz",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202604753.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202612846.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Paco, ein Teenager aus Guadalajara, erkundet seine Identität durch die Freundschaft mit Andrea und seine Anziehung zu Mario. Während der Vorbereitungen auf die Feierlichkeiten zum Patronatsfest stellt dies die Beziehung zu seiner Großmutter auf die Probe.",
+    "description_en": "Paco, a teenager from Guadalajara, explores his identity through his friendship with Andrea and his attraction to Mario. This tests his bond with his grandmother as he prepares for the feast of the patron saint.",
+    "director": "Edgar Adrián | mit Ricardo Martínez, María Rojo, Alise Cortéz, Zahid Estrada, Antonio Venegas",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202612846_1_RWD_1380.jpg",
+    "title_original": "Cuando llegue a casa",
+    "title_de_en": "When I Get Home",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202612846.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202607204.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Nach dem Verschwinden ihres Lehrers steht die schwangere Schülerin Yun-ji allein da. Um eine Abtreibung zu finanzieren, stiehlt sie die Ersparnisse ihrer Mitbewohnerin Kyung-sun. Ein Film über die Rechte am eigenen Körper, über Gesellschaft und Gemeinschaft.",
+    "description_en": "Following the disappearance of her teacher, the pregnant pupil Yun-ji is left all alone. To pay for an abortion, she steals the savings of her roommate, Kyung-sun. A film about the right over one’s own body, about society and community.",
+    "director": "Yoo Jaein | mit Subin Sim, Jiwon Lee, Sun Jang",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202607204_1_RWD_1380.jpg",
+    "title_original": "En Route To",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202607204.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202613220.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Yios, ein einsamer mythischer Junge, dessen Kopf wie die Sonne strahlt, hat Schwierigkeiten, hoch oben in den Wolken Freund*innen zu finden. Als ein Streich ihn auf die Erde befördert, stellt eine unerwartete Begegnung seine Selbstwahrnehmung infrage.",
+    "description_en": "Yios, a lonely mythical boy whose head shines like the sun, struggles to make friends in the clouds. After an unfortunate prank sends him down to Earth, an unexpected encounter challenges the way he sees himself.",
+    "director": "Andrea Szelesová",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202613220_1_RWD_1380.jpg",
+    "title_original": "En, ten, týky!",
+    "title_de_en": "Eeny, Meeny, Miny, Moe! | Ene, mene, muh!",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202613220.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202613780.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Nach dem Verlust seines besten Freundes Poupelle gerät der junge Lubicchi in ein geheimnisvolles Reich, wo eine Turmuhr auf 11:59 Uhr stehen geblieben ist. Um nach Hause zurückzukehren, muss er die Uhr wieder in Gang setzen – und neuen Mut fassen.",
+    "description_en": "After losing his friend Poupelle, young Lubicchi wanders into a mysterious realm where a tower clock is frozen at 11:59. To return home, he must restart it – and find the courage to believe again.",
+    "director": "Hirota Yusuke | mit Nagase Yuzuna, Megumi, Kubota Masataka",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202613780_1_RWD_1380.jpg",
+    "title_original": "Entotsumachi no Poupelle – Yakusoku no Tokeidai",
+    "title_de_en": "Chimney Town: Frozen in Time | Stadt der Schornsteine: In der Zeit gefangen",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202613780.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202609138.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Gugu, ein fast zwölfjähriger Junge mit großen Fußballträumen, wächst in der liebevollen Obhut seiner Großmutter Dilma auf. Als sie zunehmend gebrechlich wird, kämpft er darum, den Ort zu bewahren, an dem er frei und ganz er selbst sein kann.",
+    "description_en": "Gugu, an almost-twelve-year-old boy with football dreams, is raised in the accepting care of his grandmother, Dilma. As she becomes increasingly frail and their world shifts, he struggles to protect the place where he is free to be who he is.",
+    "director": "Allan Deberton | mit Yuri Gomes, Teca Pereira, Lázaro Ramos, Carlos Francisco, Georgina Castro",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202609138_1_RWD_1380.jpg",
+    "title_original": "Feito Pipa",
+    "title_de_en": "Gugu’s World | Gugus Welt",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202609138.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202603120.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Die zehnjährige Rabia will wissen, warum ihre Schule plötzlich schließt. Im Dorf wird wild gemunkelt, und die Behörden helfen nicht weiter. Mutig macht sich Rabia auf die Suche nach der Wahrheit und stößt auf Aberglaube, Machtmissbrauch und Schweigen.",
+    "description_en": "Ten-year-old Rabia wants to know why her school has suddenly closed. Rumours are rife in the village and the authorities are no help. Courageously setting out to find the truth, Rabia navigates rural superstitions, local corruption and a wall of silence.",
+    "director": "Seemab Gul | mit Nazualiya Arsalan, Samina Seher, Adnan Shah Tipu, Vajdaan Shah, Muhammad Zaman",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202603120_1_RWD_1380.jpg",
+    "title_original": "Ghost School",
+    "title_de_en": "Geisterschule",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202603120.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202604241.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Ein Wellensittich findet sich in einem luxuriösen Wellnesshotel wieder, das gestressten Vögeln Ruhe und Entspannung verspricht. Doch zwischen plätschernden Brunnen und wohltuenden Massagen sehnt er sich nur zurück in die Sicherheit seines Käfigs.",
+    "description_en": "A budgie finds itself in a luxurious wellness hotel that promises stressed birds peace and relaxation. But between the lulling sound of the fountains and soothing massages, it longs only to return to the safety of its cage.",
+    "director": "Merlin Flügel",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202604241_1_RWD_1380.jpg",
+    "title_original": "Hotel Oblique",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202604241.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202612227.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Mirna nimmt mit ihrem Vater den Bus von ihrem Dorf in die Stadt Niš, um dort am nationalen Mathewettbewerb teilzunehmen. Es ist ein wichtiger Tag: Ein Preis könnte ihr einen Platz an einer renommierten Schule verschaffen und eine bessere Zukunft eröffnen.",
+    "description_en": "Mirna and her father take the bus from their village to the city of Niš for her to participate in the national mathematics competition. It is a big day: winning an award could gain her a place at a prestigious school and pave the way to a better future.",
+    "director": "Jelica Jerinić | mit Goran Bogdan, Maša Radusin, Milica Janevski, Milica Trifunović, Aleksandar Milojević",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202612227_1_RWD_1380.jpg",
+    "title_original": "Imaginarni brojevi",
+    "title_de_en": "Imaginary Numbers | Imaginäre Zahlen",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202612227.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202602956.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Im Herzen der kolumbianischen Wüstenregion La Alta Guajira hört die 15-jährige Weinshi, ein Wayuu-Mädchen, deren Name „Zeit“ bedeutet, in ihren Träumen einen Ruf ihrer Vorfahren: Die Erde muss durch den heiligen Tanz ihres Volkes, den Yonna, geheilt werden.",
+    "description_en": "In the heart of the Alta Guajira, 15-year-old Weinshi, a girl from the Wayuu people whose name means “Time”, begins to hear an ancestral calling in her dreams: the earth must be healed through her people’s sacred dance, the Yonna.",
+    "director": "Luzbeidy Monterrosa Atencio | mit Luznery Epieyu, Margarita Barrios, Jose Vicente",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202602956_1_RWD_1380.jpg",
+    "title_original": "Jülapüin Yonna",
+    "title_de_en": "The Dream of Dance",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202602956.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202612014.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Ein kleiner Junge sucht nach etwas Aufregenderem, als ein Bett aufzubauen. Ein schelmisches Feuerwesen lockt ihn in eine magische Pilzwelt, in der alles möglich scheint und allerlei Abenteuer auf ihn warten – fernab der Kontrolle seines Vaters.",
+    "description_en": "A little boy, bored with building a bed, seeks something more exciting. A mischievous fire creature lures him into a magical mushroom world, where anything is possible and adventure awaits – beyond his father’s reach.",
+    "director": "Janka Feiner",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202612014_1_RWD_1380.jpg",
+    "title_original": "Lángbogár a zsebemben",
+    "title_de_en": "Fire in My Pocket | Feuer in der Hosentasche",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202612014.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202607900.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "An einem ruhigen Spätsommertag machen sich Alessandro und Flavio auf die Suche nach den letzten Geheimnissen ihrer Stadt. Auf einem großen Kirschbaum warten sie auf die Nacht. Ein Bier mit Freund*innen, Mopeds auf dem Weg nach Hause und ein Abschied.",
+    "description_en": "On a quiet late-summer day, Alessandro and Flavio set out in search of the last secrets of their city. Sitting on the branch of a large cherry tree, they wait for the night. A beer with friends, mopeds heading home, and a farewell.",
+    "director": "Emanuele Tresca | mit Alessandro Nicola Bernardo, Flavio Condemi",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202607900_1_RWD_1380.jpg",
+    "title_original": "Mambo Kids",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202607900.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202609924.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Ricardo ist ein junger Punk aus der Vorstadt. Plötzlich im Besitz alkoholbefeuerter Superkräfte, macht er sich daran, die Welt zu verändern. Doch ein brutaler Fehler entfacht einen internationalen Konflikt – und er steht im Zentrum des Sturms.",
+    "description_en": "After gaining alcohol-fuelled superpowers, Ricardo, a young punk from the outskirts, sets out to change society. But one brutal mistake ignites an international conflict, with him at the centre of the storm.",
+    "director": "Diego (Mapache) Fuentes | mit Ramón Gávez, Diego Bravo, Antonia McCarthy, Rosa Peñaloza, Rodrigo Lisboa",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202609924_1_RWD_1380.jpg",
+    "title_original": "Matapanki",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202609924.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202601748.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Nach staatlichen Angriffen auf die Proteste im Iran beginnen Zivilist*innen, diese vom Fenster aus zu dokumentieren. Als eine Frau beim Filmen erschossen wird, stellt sich eine Filmstudentin die Frage, ob eine Revolution hinter Fenstern beginnen kann.",
+    "description_en": "Following crackdowns on protests in Iran, civilians begin documenting the unrest from behind windows. When a woman is shot while recording, a film student writes her a letter raising the question: Can a revolution emerge from behind windows?",
+    "director": "Mehraneh Salimian, Amin Pakparvar",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202601748_1_RWD_1380.jpg",
+    "title_original": "Memories of a Window",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202601748.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202612564.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Rong Chen möchte gerne ihren Platz in der Blockflötengruppe behalten, Shao Yu will das Spielen aufgeben. Sie fragt ihn nach Tipps, und durch das gemeinsame Üben verbessern beide nicht nur ihr Können, sie lernen auch noch viel Wichtigeres voneinander.",
+    "description_en": "Rong Chen would like to keep her place in the recorder group, Shao Yu wants to give up playing. She asks him for tips, and by practicing together, they not only improve their skills, but also learn something much more important from each other.",
+    "director": "Zhuang Rong Zuo | mit Liu Rong Chen, Wu Shao Yu",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202612564_1_RWD_1380.jpg",
+    "title_original": "Ni chui do wo chui si",
+    "title_de_en": "Tutti",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202612564.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202612224.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Die 17-jährige Ni’er fühlt sich zwischen ihrem monotonen Job an einer Tankstelle und den Erwartungen ihrer Familie gefangen. Eine flüchtige Begegnung mit einer Truckerin, die Freiheit und Selbstbestimmung ausstrahlt, löst eine stille Revolution in ihr aus.",
+    "description_en": "Seventeen-year-old Ni’er feels trapped between her monotonous daily grind at a petrol station and the weight of family expectations. A fleeting encounter with a female truck driver radiating freedom and self-determination sparks a quiet revolution within her.",
+    "director": "Tan Yucheng | mit Wang Zhiyun, Hou Ruining",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202612224_1_RWD_1380.jpg",
+    "title_original": "Ni’er",
+    "title_de_en": "The Girl",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202612224.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202611243.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Nach dem Tod ihrer besten Freundin verbirgt Liz ihr wahres Ich, bis ein Wochenendtrip verbotenes Begehren weckt. Die Folgen sind Paranoia und Gewalt – Liz’ Geheimnis entfaltet tödliche Kraft.",
+    "description_en": "After her girlfriend’s death, Liz hides her true self until a weekend trip with friends awakens forbidden desires. The result is paranoia and violence that consumes the group as Liz’s secret unleashes a deadly force.",
+    "director": "Victoria Linares Villegas | mit Cecile van Welie, Gabriela Cortés, Camila Issa, Camila Santana, Mariela Guerrero",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202611243_1_RWD_1380.jpg",
+    "title_original": "No Salgas",
+    "title_de_en": "Don’t Come Out",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202611243.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202610128.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Aus dem komfortablen Stadtleben ins Heimatdorf seiner Familie verbannt, trifft Mivan auf seine verbitterte Tante, freundet sich mit einem Pferd an, erlebt wilde Abenteuer mit den Nachbarskindern, entdeckt die Schönheit des Lebens und findet ungeahnten Mut.",
+    "description_en": "Exiled from city comforts to his ancestral village, Mivan meets his embittered aunt, befriends a horse and joins the local kids on wild adventures, discovering the beauty of life and a courage he never knew he had.",
+    "director": "Rima Das | mit Bhuman Bhargav Das, Sukanya Boruah, Mrinmoy Das",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202610128_1_RWD_1380.jpg",
+    "title_original": "Not a Hero",
+    "title_de_en": "Kein Held",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202610128.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202613162.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Als er abends nicht einschlafen kann, beginnt ein Junge, über seinen Platz in der Welt nachzudenken. Wenn die Erde bloß eine kleine, durchs All fliegende Murmel ist und er nur ein Kind unter vielen, welche Bedeutung hat dann seine Existenz?",
+    "description_en": "When a boy has trouble falling asleep at night, he begins to ponder his place in the world. If the Earth is just a small marble flying through space, and he is only one child among many, what is the meaning of his existence?",
+    "director": "Jonas Taul | mit Harriet Toompere",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202613162_1_RWD_1380.jpg",
+    "title_original": "Öömõtted",
+    "title_de_en": "A Serious Thought | Nachtgedanken",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202613162.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202606578.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Papaya, ein winziger, flugbegeisterter Samen im Amazonas-Regenwald, möchte am liebsten immer in Bewegung bleiben, um ja nicht zu keimen. Doch schließlich entdeckt Papaya die Kraft ihrer Wurzeln und löst damit eine Revolution aus, die ihre Welt verändert.",
+    "description_en": "Papaya, a tiny seed in the Amazon rainforest who is passionate about flying, must keep moving to avoid taking root. But when she discovers the power of her roots, it triggers a revolution that transforms her world and fulfils her dreams in an unexpected way.",
+    "director": "Priscilla Kellen",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202606578_1_RWD_1380.jpg",
+    "title_original": "Papaya",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202606578.html"
+  },
+  {
+    "link": "https://www.berlinale.de/de/2026/programm/202607049.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Vier versklavte Mädchen träumen von der Freiheit. Durch unerwartete Ereignisse in Lebensgefahr gebracht, beschließen sie zu fliehen. Ihre Gebieterinnen entdecken den Plan – und bestehen überraschenderweise darauf, sie zu begleiten.",
+    "description_en": "Four enslaved girls dream of freedom. When a turn of events puts their lives at risk, they decide to run away. Their mistresses discover the plan – and to the girls surprise insist on going with them.",
+    "director": "Karen Suzane | mit Ágatha Marinho, Alana Cabral, Dhara Lopes",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202607049_1_RWD_1380.jpg",
+    "title_original": "Quatro Meninas",
+    "title_de_en": "Four Girls",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202607049.html"
+  },
+{
+    "link": "https://www.berlinale.de/de/2026/programm/202602593.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Der pferdebegeisterte Jaleal wächst in den West Yorkshire Moors auf und betreibt dort den uralten, aus Südasien stammenden Reitsport Neza Bazi. Über drei Sommer gedreht, entstaubt der Film traditionelle Erzählungen über das Empire, Migration und Zugehörigkeit.",
+    "description_en": "Horse-obsessed Jaleal comes of age on the West Yorkshire moors while carrying forward the ancient cavalry sport of Neza Bazi. Filmed over three summers, this joyful portrait blows the dust off traditional tales of Empire, migration and belonging.",
+    "director": "Roopa Gogineni, Farhaan Mumtaz",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202602593_1_RWD_1380.jpg",
+    "title_original": "Riding Time",
+    "title_de_en": "Reitend",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202602593.html"
+  },
+{
+    "link": "https://www.berlinale.de/de/2026/programm/202602605.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Li Yans Leben ist so streng geregelt wie die Produktionslinie in der örtlichen Geflügelfabrik. Ihre Oma will ihr dort einen Job besorgen, doch Li Yan lehnt ab: Besessen von den Mysterien von Schöpfung und Leben versucht sie lieber, selbst ein Ei auszubrüten.",
+    "description_en": "Li Yan’s life is as regimented as the production lines in the local poultry factory. Her grandmother is determined to get her a job there, but Li Yan refuses. Obsessed with the mystery of life and creation, she secretly attempts to hatch a stolen egg.",
+    "director": "Wang Beidi | mit Lv Jiaxin, Li Li, Xu Qinghe",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202602605_1_RWD_1380.jpg",
+    "title_original": "Scorching",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202602605.html"
+  },
+{
+    "link": "https://www.berlinale.de/de/2026/programm/202614883.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Seoul, 1989: Jung-min möchte ein Schnelllese-Wunderkind werden, genau wie Dong-hyun – der coolste Typ der Stadt, der ein ganzes Buch in nur 60 Sekunden lesen kann. Aber die Dinge laufen nicht ganz so, wie sie es sich vorgestellt hat.",
+    "description_en": "Seoul, 1989. Jung-min wants to become a speed-reading prodigy, just like Dong-hyun – the coolest guy in town who can finish an entire book in just 60 seconds! But things do not go exactly as she expected.",
+    "director": "Oh Jiin | mit Kim Gyuna, Lee Kyoung Hoon, Hong Sungchoon, Leem Seung-Min, Ban Hae Young",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202614883_1_RWD_1380.jpg",
+    "title_original": "Speedy!",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202614883.html"
+  },
+{
+    "link": "https://www.berlinale.de/de/2026/programm/202601583.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "In einer kleinen Dorfschule verwandelt ein Lehrer die Tafel des Klassenzimmers manchmal mithilfe eines weißen Tuches. Als es für eine Bestattungszeremonie benötigt wird, erheben die Kinder Einspruch – und fordern das ein, was ihnen versprochen wurde.",
+    "description_en": "In a small village classroom, a teacher often transforms the blackboard with a simple white sheet. When it is taken for a burial rite, the children refuse to let their moment slip away – and set out to reclaim what they were promised.",
+    "director": "Navroz Shaban | mit Rewan Nizar",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202601583_1_RWD_1380.jpg",
+    "title_original": "Spî",
+    "title_de_en": "White | Weiß",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202601583.html"
+  },
+{
+    "link": "https://www.berlinale.de/de/2026/programm/202609010.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Als wäre der Kampf gegen Krebs nicht schon hart genug, melden die Eltern der 17-jährigen Ivy sie für ein Feriencamp an, das Ivy nur „Chemo-Camp“ nennt. Entgegen ihrer Erwartungen findet sie dort Freund*innen und erlebt einen Sommer, den sie nie vergessen wird.",
+    "description_en": "As if conquering cancer were not hard enough, 17-year-old Ivy’s parents sign her up to spend the summer at what she calls “chemo camp”. Once there, she unexpectedly manages to find friends in a group of misfits and has a summer she will never forget.",
+    "director": "George Jaques | mit Bella Ramsey, Neil Patrick Harris",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202609010_1_RWD_1380.jpg",
+    "title_original": "Sunny Dancer",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202609010.html"
+  },
+{
+    "link": "https://www.berlinale.de/de/2026/programm/202616239.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Als sich Bianca an einem heißen Sommertag von ihren Eltern übersehen fühlt, hilft ihr die unerwartete Begegnung mit ihrer Lieblingsschauspielerin Billie King, zu sich zu finden. Eine zarte, fantasievolle Geschichte über Träume und einen eigenen Platz im Leben.",
+    "description_en": "On a sweltering summer day, Bianca feels unseen by her parents. An unexpected encounter with her favourite female actor, Billie King, helps her to find herself. A tender, imaginative tale about dreams and carving out a space for yourself in life.",
+    "director": "Frederike Migom | mit Lisa Vanhemelrijck, Laurence Roothooft, Sachli Gholamalizad, Lewis Hannes, Lewis Gérard",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202616239_1_RWD_1380.jpg",
+    "title_original": "Tegenwoordig heet iedereen Sorry",
+    "title_de_en": "Everyone’s Sorry Nowadays | Heute heißen alle Sorry",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202616239.html"
+  },
+{
+    "link": "https://www.berlinale.de/de/2026/programm/202602524.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Am Stadtrand von Berlin driftet der 16-jährige Ilay durch den Sommer, während eine Palliativpflegerin sich um seine schwer kranke Mutter kümmert.",
+    "description_en": "Sixteen-year-old Ilay drifts through the summer on the outskirts of Berlin while a palliative nurse accompanies his ailing mother during her last days.",
+    "director": "Saša Vajda | mit Mohammed Yassin Ben Majdouba, Flor Prieto Catemaxca, Mahira Hakberdieva, Safet Bajraj, Shanthi Philipp",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202602524_1_RWD_1380.jpg",
+    "title_original": "The Lights, They Fall",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202602524.html"
+  },
+{
+    "link": "https://www.berlinale.de/de/2026/programm/202610894.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Grace wächst mit zwei Kulturen auf. Sie hat eine weiße britische Mutter und einen Schwarzen jamaikanischen Vater. Mit zunehmendem Alter entwickelt sie ein Bewusstsein für die eigene Identität und lernt, als junge Frau zu leben, ganz Schwarz, ganz weiß.",
+    "description_en": "Grace is born of dual heritage: she has a white British mother and a Black Jamaican father. As she reaches her early teens, Grace takes her identity into her own hands and begins to navigate how to exist as a young woman, fully Black, fully white.",
+    "director": "Fenn O Meally | mit Anaya Thorley, Tyrelle Boyce, David Gyasi, Lucy Phelps, Thea Butler",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202610894_1_RWD_1380.jpg",
+    "title_original": "The Thread",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202610894.html"
+  },
+{
+    "link": "https://www.berlinale.de/de/2026/programm/202613958.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Als ihr Goldfisch stirbt, macht sich die sechsjährige Feifei in einem kleinen walisischen Küstenort auf die Suche nach Antworten – und deutet ein Volksmärchen aus der Heimat ihrer Mutter auf ganz eigene Weise um.",
+    "description_en": "When her goldfish dies, six-year-old Feifei sets off through a small Welsh seaside town in search of answers. Her journey leads her to reimagine a folktale from her mother’s homeland – on her own terms.",
+    "director": "Jian Luo | mit Wang Kexin, Jessica Dong",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202613958_1_RWD_1380.jpg",
+    "title_original": "Under the Wave off Little Dragon",
+    "title_de_en": "Unter der Welle vor Little Dragon",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202613958.html"
+  },
+{
+    "link": "https://www.berlinale.de/de/2026/programm/202611958.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Ein stiller Junge und ein leise trauernder Witwer, der ehrenamtlich an dessen Schule arbeitet, entdecken einen magischen Stift und ein Tagebuch. Diese ermöglichen es ihnen, einander mit hörendem Herzen zu verstehen.",
+    "description_en": "A quiet boy and a silently grieving widower who volunteers at the boy’s school discover a magical pen and journal that enable them to hear each other with a listening heart.",
+    "director": "Daniel Neiden | mit Bruce Vilanch, Parker Allana Hughes",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202611958_1_RWD_1380.jpg",
+    "title_original": "Whale 52 – Suite for Man, Boy, and Whale",
+    "title_de_en": "Wal 52 – Suite für Mann, Junge und Wal",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202611958.html"
+  },
+{
+    "link": "https://www.berlinale.de/de/2026/programm/202603286.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation 14plus",
+    "description": "Die Co-Regisseur*innen Lexie und Logan verweben die Geschichten zweier trans Jungen, die durch Suizid gestorben sind, mit denen ihrer transmännlichen+ Community. Dabei vermitteln sie Ressourcen und Vorstellungskraft für einen Weg nach vorn.",
+    "description_en": "Co-directors Lexie and Logan weave together the stories of two trans boys who died by suicide and their trans masculine+ community, offering resources and imagination for a way forward.",
+    "director": "Lexie Bean, Logan Rozos",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202603286_1_RWD_1380.jpg",
+    "title_original": "What Will I Become?",
+    "title_de_en": "",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202603286.html"
+  },
+{
+    "link": "https://www.berlinale.de/de/2026/programm/202613625.html",
+    "title": "",
+    "title_de": "",
+    "section": "Generation Kplus",
+    "description": "Mit ihrem besten Freund Umut spielt Deniz ganz unbeschwert in ihrem Geheimversteck. Aber in der Schule schließen die Jungs sie aus, und zu den Mädchen passt sie auch nicht. Doch dann wird ein Kindheitstraum wahr und bekommt eine neue Bedeutung.",
+    "description_en": "Deniz plays happily with her best friend Umut at their secret hideout. But at school, she is excluded by the boys and also fails to fit in with the girls. Then, a childhood dream becomes true and takes on a new meaning.",
+    "director": "Dalya Keleş | mit Sudem Berin-Dinç, Mustafa Konak, İpek Çattım",
+    "image": "https://www.berlinale.de/media/filmstills/2026/generation-2026/202613625_1_RWD_1380.jpg",
+    "title_original": "Yerçekimi",
+    "title_de_en": "Gravity | Schwerkraft",
+    "link_en": "https://www.berlinale.de/en/2026/programme/202613625.html"
+  }
+]';
 
-        $imported = 0;
-        $errors = 0;
+    $films = json_decode($text_input, true);
+    if (!$films) return;
 
-        $text_input = '
-        [
-          {
-            "title": "Akababuru: Expresión de asombro",
-            "description": "Kari, ein junges Embera-Mädchen, hat Angst zu lachen. Eines Tages begegnet sie der jungen Mestizin Kera, die ihr die Legende von Kiraparamia erzählt: eine Frau, die in der Erzählung der Ältesten von den Göttern bestraft wurde, weil sie ihren Mann ausgelacht hatte. Doch Kera interpretiert die Legende neu. Sie ist überzeugt, Kiraparamias Lachen habe sie in Wirklichkeit befreit. Diese Geschichte inspiriert Kari, und sie beschließt, sich den Kindern entgegenzustellen, die sie und ihre Freund*innen immerzu bedrängen.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202516209_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Irati Dojura Landa Yagarí",
-            "link": "https://www.berlinale.de/de/2025/programm/202516209.html"
-          },
-          {
-            "title": "Anngeerdardardor",
-            "description": "Kaali stellt fest, dass sein geliebter Schlittenhund verschwunden ist. Sofort macht er sich in der kleinen Stadt Tasiilaq in Ostgrönland auf die Suche nach ihm. Er vermutet, dass der Hund gestohlen wurde. In Begleitung seines einzigen Freundes, Bartilaa, trifft er auf verschiedene Ortsbewohner*innen und muss sich den Herausforderungen stellen, die das Anderssein in dieser eng verbundenen Gemeinschaft mit sich bringt. Auf der Flucht vor einer Gruppe Jugendlicher entdeckt Kaali seinen Hund und stiehlt ihn zurück. Doch er wird auf frischer Tat ertappt, flieht und lässt Bartilaa allein zurück. Als er erfährt, dass der wahre Dieb ein anderer ist als gedacht, muss er schnell handeln, um seinen einzigen Freund nicht zu verlieren.\nAnngeerdardardor ist der erste Kurzfilm, der in Ostgrönland entstanden ist. Er basiert auf einer wahren Begebenheit und wurde in Zusammenarbeit mit den Jugendlichen von Tasiilaq gedreht.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202510745_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Christoffer Rizvanovic Stenbakken",
-            "link": "https://www.berlinale.de/de/2025/programm/202510745.html"
-          },
-          {
-            "title": "Arame farpado",
-            "description": "Im Umland von São Paulo spannen die zwölfjährige Angelina und ihr jüngerer Bruder Santiago einen Stacheldraht über eine unbefestigte Straße, um damit den vorbeifahrenden Lastwagen ihres Stiefvaters zu zerkratzen. Doch der Plan geht furchtbar schief: Eine Unbeteiligte wird verletzt. Die ältere Schwester Evita versucht, die Situation zu retten. Gemeinsam verbringen sie eine schlaflose Nacht in einer überfüllten Notaufnahme, wo die verborgenen Spannungen der Familie an die Oberfläche kommen. Mit Menschen aus den unterschiedlichsten Gesellschaftsschichten konfrontiert, müssen Angelina, Evita und ihr Stiefvater Zé Luis sich den Konsequenzen ihres Handelns stellen und darum ringen, einander als Familie zu verstehen.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202512078_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Gustavo de Carvalho",
-            "link": "https://www.berlinale.de/de/2025/programm/202512078.html"
-          },
-          {
-            "title": "Atardecer en América",
-            "description": "Die 13-jährige Bárbara lässt die Krise in Venezuela hinter sich und durchquert Südamerika. In Chile warten bessere Lebensbedingungen auf sie. Sie erinnert sich an die Nacht, in der sie die Hochebene Altiplano in den Anden überquerte. In 4000 Metern Höhe kämpfte sie bei klirrender Kälte gegen ihre Erschöpfung an, hatte aber gleichzeitig das Gefühl, von einer spirituellen Präsenz begleitet zu werden, die umherstreift wie der Wind. Durch diese Landschaft zwischen Bolivien und Chile, mit ihren schneebedeckten Bergen, wild lebenden Alpakas, kristallklaren Bächen und kargen Wüstenabschnitten, führt eine der gefährlichsten Migrationsrouten Lateinamerikas. Für Bárbara bleibt klar: Sie wird niemals aufgeben, egal was passiert.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202516133_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Matías Rojas Valencia",
-            "link": "https://www.berlinale.de/de/2025/programm/202516133.html"
-          },
-          {
-            "title": "Autokar",
-            "description": "In den 1990er-Jahren verlässt die achtjährige Agata ihre polnische Heimat in Richtung Belgien – eine Reise, die ihr Angst macht. Im Bus beginnt sie, einen Brief an ihren Vater zu schreiben, der in Polen geblieben ist. Als ihr Bleistift herunterfällt und wegrollt, ist Agata gezwungen, ihre Schüchternheit zu überwinden. Auf der Suche nach dem Stift schlängelt sie sich zwischen den Sitzreihen hindurch und taucht dabei in eine fantastische Welt ein, die von seltsamen Fahrgästen – halb Mensch, halb Tier – bewohnt wird. Agatas Wahrnehmung verwandelt migrantische Realität in ein Initiationserlebnis.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202513207_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Sylwia Szkiłądź",
-            "link": "https://www.berlinale.de/de/2025/programm/202513207.html"
-          },
-          {
-            "title": "Beneath Which Rivers Flow",
-            "description": "In den Sümpfen des Südiraks, abgeschieden vom Rest der Welt, leben Ibrahim und seine Familie eng verwoben mit dem Marschland, dem Fluss, dem Schilfrohr und den Tieren, die sie versorgen. In seinem Büffel hat der stille und verschlossene Ibrahim einen treuen Begleiter. Als sich eines Morgens dichter Nebel über das Land legt, nimmt Ibrahim eine unheilvolle Veränderung wahr. Die Flüsse beginnen auszutrocknen, die Erde bekommt Risse, und die einst blühende Landschaft verwandelt sich in eine triste Einöde. Ibrahims Welt bricht zusammen. Er sieht sich unkontrollierbaren Kräften ausgesetzt, die nicht nur seine Lebensweise bedrohen, sondern auch das einzige Lebewesen, das er wirklich versteht.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202506829_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Ali Yahya",
-            "link": "https://www.berlinale.de/de/2025/programm/202506829.html"
-          },
-          {
-            "title": "Christy",
-            "description": "Der 17-jährige Christy steht an einem Scheideweg. Er ist gerade aus seiner Pflegefamilie in der ruhigen Vorstadt geworfen worden und bei seinem älteren Bruder Shane eingezogen, der im Arbeiter*innenviertel im Norden der irischen Stadt Cork wohnt. Für Shane ist das nur eine vorübergehende Lösung, aber Christy beginnt, sich bei ihm zu Hause zu fühlen, lässt sich auf die Menschen vor Ort ein und findet Freund*innen. Über die erweiterte Familie – so schlecht ihr Ruf auch ist – kann er sogar wieder an seine Vergangenheit anknüpfen. Shane versucht jedoch, ihn von der Verwandtschaft fernzuhalten. Er will um jeden Preis ein besseres Leben für Christy, selbst wenn das bedeutet, dass er ihn von sich stoßen muss. Nach vielen Jahren der Trennung stehen die Brüder vor der Aufgabe, sich mit ihren turbulenten Vergangenheiten zu versöhnen und zu entscheiden, wie die Zukunft aussehen soll.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202503982_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Brendan Canty",
-            "link": "https://www.berlinale.de/de/2025/programm/202503982.html"
-          },
-          {
-            "title": "Daye: Seret Ahl El Daye",
-            "description": "Daye ist ein 14-jähriger nubischer Albino mit einer goldenen Stimme. Obwohl er wegen seines Aussehens gemobbt wird und sein Vater sich von ihm abgewendet hat, lässt er sich nicht unterkriegen. Er träumt davon, Sänger zu werden wie sein Idol Mohamed Mounir. Als er die Chance bekommt, bei „The Voice“ vorzusingen, machen sich Daye und seine Familie auf die Reise von Assuan nach Kairo. Auf der Reise geht es turbulent zu: Ein Auto wird gestohlen, Ersparnisse gehen verloren, es muss Flucht vor der Polizei ergriffen und Diskriminierung entgegengetreten werden. Aber ihre Liebe zueinander und Dayes außergewöhnliches Talent helfen ihnen über alle Hindernisse hinweg, und sie erhalten unerwarteten Beistand, unter anderem von einem freundlichen Feuerwehrmann – und von Mounir höchstpersönlich. Daye ist eine Geschichte über Resilienz, Hoffnung und die Kraft der Musik. Sie erforscht Identität, Ehrgeiz und Familienzusammenhalt und zeigt, wie man mit Entschlossenheit und Liebe alle Widrigkeiten überwinden kann.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202501754_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Karim El Shenawy",
-            "link": "https://www.berlinale.de/de/2025/programm/202501754.html"
-          },
-          {
-            "title": "De menor",
-            "description": "Eine fiktionale Fernsehserie über das brasilianische Rechtssystem: Während sich einige Gerichtsverhandlungen in einem schicken Esszimmer abspielen, können andere als Dialoge im Podcast-Format verfolgt werden. In der letzten Episode kommen ein Pflichtverteidiger und zwei Jugendliche zusammen, um das Filmmaterial zu kommentieren, wie es im Internetgenre der Reaktionsvideos üblich ist. Bei Generation 14plus werden zwei Episoden gezeigt: In der einen wird ein Jugendlicher als mutmaßlicher Dealer verurteilt und gerät in einen musikalischen Konflikt mit dem strengen Richter, der sich fragt, welches Urteil am gerechtesten ist. In der anderen Episode wird der Fall einer Jugendlichen, die ein Lebensmittelgeschäft ausraubt, um ihren Schwarm zu beeindrucken, als Sensationsgeschichte in einer Talkshow besprochen.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202515972_1_RWD_1920.jpg",
-            "section": "Generation 14plus Sondervorführung",
-            "director": "Caru Alves de Souza",
-            "link": "https://www.berlinale.de/de/2025/programm/202515972.html"
-          },
-          {
-            "title": "Down in the Dumps",
-            "description": "Cinelli, eine neurotische und perfektionistische Marienkäferin, bereitet sich akribisch auf ihre bevorstehende Geburtstagsparty vor. Alles muss makellos sein – das ist ja wohl das Mindeste! Ihr unbeliebter Nachbar Peri, eine tollpatschige Kakerlake, möchte mitfeiern. Aber aus Angst, er könnte die Party ruinieren, lädt Cinelli ihn nicht ein. Peri ist tief verletzt und beschließt, Cinellis rote Deckflügel zu stehlen, die wie nichts anderes ihre Vollkommenheit symbolisieren. Als Cinelli am nächsten Tag bemerkt, dass die Flügel weg sind, verfällt sie in eine Depression. Was hat das Leben noch für einen Sinn ohne ihr schillerndes Äußeres? Während sie in einem dunklen Tunnel verschwindet, erkennt Peri nach und nach, dass in Cinellis Leben nicht alles so perfekt ist, wie es scheint. Als er versteht, was das für sie bedeutet, beschließt er, seine Nachbarin zu suchen …",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202506788_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Vera van Wolferen",
-            "link": "https://www.berlinale.de/de/2025/programm/202506788.html"
-          },
-          {
-            "title": "Fantas",
-            "description": "Tania beschließt, ihr Pferd Fantas mit in die Stadt zu nehmen und in dem Arbeiter*innenviertel, in dem sie mit ihrer Familie lebt, ihren Freund*innen vorzustellen. Die Entscheidung, ihre Leidenschaft mit ihnen zu teilen, ist auch ein Versuch, zwei Teile von sich selbst zusammenzubringen. Eine urbane Geschichte mit magischen Untertönen, in der zwei Welten, die sich nie zuvor vermischt haben, aufeinanderprallen.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202506827_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Halima Elkhatabi",
-            "link": "https://www.berlinale.de/de/2025/programm/202506827.html"
-          },
-          {
-            "title": "Hora do recreio",
-            "description": "Hora do recreio befasst sich mit dem Thema Bildung in Brasilien und verfolgt dabei sowohl einen dokumentarischen als auch einen fiktionalen Ansatz. Schüler*innen sprechen über Probleme wie Gewalt, Rassismus und Femizide und spielen Situationen nach, die sie bei Polizeieinsätzen in den Slums erlebt haben. An einer anderen Schule erarbeiten die Schüler*innen eine dramatische Fassung des Romans „Clara dos Anjos“ von Lima Barreto, der zu Beginn des 20. Jahrhunderts geschrieben wurde und die Misshandlung eines mittellosen Schwarzen Mädchens schildert. Anhand ihres Textes gleichen die Schüler*innen diese Geschichte mit eigenen Erfahrungen und den Problemen der heutigen Gesellschaft ab. Ausgangspunkt des Films war eine Umfrage unter Lehrer*innen an öffentlichen Einrichtungen; gedreht wurde an Schulen, die für unterschiedliche Stadtteile und Communities in Rio de Janeiro repräsentativ sind. Der dokumentarische Teil wurde aus den Diskussionen in den Klassenzimmern entwickelt, aber auch Ereignisse während der Dreharbeiten, darunter ein Polizeieinsatz, flossen mit ein.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202505113_1_ORG.jpg",
-            "section": "Generation 14plus",
-            "director": "Lucia Murat",
-            "link": "https://www.berlinale.de/de/2025/programm/202505113.html"
-          },
-          {
-            "title": "Howl",
-            "description": "Daisy und Lila sind beste Freundinnen. Die beiden 16-Jährigen haben immer alles miteinander geteilt, nun zeigen sich Risse. Daisy hat ihre erste Periode bekommen, und Lila, die immer noch auf ihre wartet, fühlt sich abgehängt. Auf einer sommerlichen Hausparty in der Vorstadt bricht Lila das Versprechen, stets Seite an Seite zu bleiben, und lässt Daisy für einen Jungen sitzen. Daisy zieht sich an den Pool zurück, wo sie Drew begegnet. Selbstbewusst und unwiderstehlich, ist Drew all das, was sie selbst gerne wäre. Als Drew sich für einen Kuss zu ihr beugt, spürt sie, wie sich in ihrem Inneren etwas verschiebt. Verzaubert von diesem Moment, ignoriert sie Lilas Rufe nach Hilfe. Später, als sie Lila wiedertrifft, bekommt sie Zweifel, ob das richtig war. Eine Geschichte über Freundschaft, Identität und die Momente, in denen sich zeigt, was wir einander bedeuten.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202515181_1_ORG.jpg",
-            "section": "Generation 14plus",
-            "director": "Domini Marshall",
-            "link": "https://www.berlinale.de/de/2025/programm/202515181.html"
-          },
-          {
-            "title": "I agries meres mas",
-            "description": "Als Chloe obdachlos wird, beschließt sie, Athen zu verlassen. Unterwegs zu ihrer älteren Schwester trifft sie zufällig auf eine Gruppe junger Leute, die mit einem Wohnmobil durch Griechenland reisen und Menschen helfen, die am Rande der Armut leben. Chloe ist sofort von den Idealen und dem unkonventionellen Lebensstil der Gruppe fasziniert und schließt sich ihr an. So entdeckt sie Seiten ihres Landes, aber auch an sich selbst, die ihr bislang unbekannt waren. Sie erfährt, wie es ist, sich um andere zu kümmern und umsorgt zu werden. Wie es ist, eine Familie zu haben, die man sich selbst ausgesucht hat, und wie viel man eventuell opfern muss, um sie nicht zu verlieren. Sie erlernt die Rituale ihres neuen Stammes, findet Liebe, wird enttäuscht, erlebt Angst, Hunger, Gefahr, Freiheit. Die Straßen der Rebellion, denen Chloe auf ihrer fieberhaften Reise folgt, führen sie über die Schwelle zum Erwachsensein und bringen die Erkenntnis, dass es weniger wehtut, wenn man nicht allein ist.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202503099_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Vasilis Kekatos",
-            "link": "https://www.berlinale.de/de/2025/programm/202503099.html"
-          },
-          {
-            "title": "Juanita",
-            "description": "Die zwölfjährige Juanita wurde in der Dominikanischen Republik geboren und lebt jetzt in einer Kleinstadt in der Nähe von Barcelona. Wie viele Mädchen aus Lateinamerika hat sie immer von all den Freiheiten geträumt, die Frauen in Europa genießen. Doch selbst in ihrem scheinbar so aufgeschlossenen Umfeld hat sie das Gefühl, dass ihr Körper nicht den Schönheitsnormen entspricht, die für Frauen gelten. Als sie zu einer Poolparty eingeladen wird, spürt Juanita, dass auch sie sich dem gesellschaftlichen Druck nicht entziehen kann. Mit allen Mitteln versucht sie, loszuwerden, was sie am meisten verunsichert: die Haare an ihren Beinen. Ihre Freund*innen, ihr Schwarm, ihre Mutter – alle haben dazu etwas zu sagen. Doch für Juanita, die auch im Sommer stets nur lange Hosen trägt, ist es undenkbar, sich vor der Party nicht zu rasieren. Nicht, weil sie es sich so genau überlegt hat, sondern weil sie glaubt, keine Wahl zu haben.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202513675_1_ORG.jpg",
-            "section": "Generation Kplus",
-            "director": "Karen Joaquín,",
-            "link": "https://www.berlinale.de/de/2025/programm/202513675.html"
-          },
-          {
-            "title": "Julian and the Wind",
-            "description": "Arthur und Julian sind Zimmergenossen in einem Jungeninternat. Arthur ist in Julian verliebt. Doch Julian lässt ihn links liegen. Als Julian zu schlafwandeln beginnt, entwickelt sich eine sonderbare Form der Intimität. Schlafend verlässt Julian das gemeinsame Zimmer und das Wohngebäude und geht auf den Wiesen des Internatsgeländes umher. Arthur folgt ihm nach draußen. Gleichzeitig kommt ein mysteriöser Wind auf, der mit jeder weiteren Nacht stärker wird …",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202504111_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Connor Jessup",
-            "link": "https://www.berlinale.de/de/2025/programm/202504111.html"
-          },
-          {
-            "title": "Little Rebels Cinema Club",
-            "description": "2008 in Indonesien: Der 14-jährige Doddy erzählt seinen drei besten Freund*innen von seinen Kinobesuchen in der Hauptstadt Jakarta. In Parepare, wo die vier wohnen, gibt es kein Kino. Wortgewandt gibt Doddy die Handlung eines Zombiefilms wieder, weigert sich aber, das Ende zu verraten. Er hat eine bessere Idee: In wenigen Wochen wird er mit seiner Familie nach Jakarta umziehen, als Abschiedsgeschenk möchte er mit seinen Freund*innen die Schlussszene des Films nachstellen und mit der Handycam aufnehmen. Das Ergebnis sollen sie sich dann bei ihm zu Hause ansehen, wo Doddy zusammen mit seiner Mutter ein Kino einrichten will. Doch zuerst muss er mal an die Handycam kommen, denn die gehört Anji, seinem von Trauer, Herzschmerz und Wut geplagten Emo-Bruder.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202515182_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Khozy Rizal",
-            "link": "https://www.berlinale.de/de/2025/programm/202515182.html"
-          },
-          {
-            "title": "Maya, donne-moi un titre",
-            "description": "Maya und ihr Vater, Michel Gondry, leben in zwei unterschiedlichen Ländern. Jeden Abend bittet er sie: „Maya, schenke mir einen Titel.“ Ihre Antwort dient ihm als Grundlage für viele kurze Stop-Motion-Animationen, in denen Maya die Heldin ist. So entsteht eine poetische und amüsante Reise, die zum Träumen und Lachen einlädt.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202511668_1_ORG.jpg",
-            "section": "Generation Kplus",
-            "director": "Michel Gondry",
-            "link": "https://www.berlinale.de/de/2025/programm/202511668.html"
-          },
-          {
-            "title": "Naerata ometi",
-            "description": "Mari lebt im Erziehungsheim. Die Mutter der 16-Jährigen ist tot, der Vater ein Trinker. Darum wurde Mari ins Heim abgeschoben, so wie die anderen Kinder und Jugendlichen, die hier leben. Ihre Umgangsformen sind rau, ihre Spiele brutal, und Mari kommt damit nicht zurande. Sie unternimmt einen Fluchtversuch, doch der misslingt. Daraufhin bietet ihr Tauri, der Sohn eines einflussreichen Vaters, seinen Schutz an. Mari aber fühlt sich zu dem rüden Robi hingezogen und bringt damit eine Rivalin gegen sich auf … Der 1987 bei der Berlinale mit dem UNICEF-Preis ausgezeichnete Spielfilm der Estin Leida Laius (1923–1996) führt in eine jugendliche Parallelwelt abseits staatlicher Ordnungsvorstellungen. Inszeniert wurde er an authentischen Schauplätzen und vorwiegend mit Laiendarsteller*innen, was dem Film einen dokumentarischen Touch verleiht. Co-Regisseur Arvo Iho: „Wir verwendeten Musik von Bob Dylan und Janis Joplin, um das richtige Tempo und die richtige Stimmung am Set zu erzeugen. Sie war so ehrlich und leidenschaftlich wie der Film, den wir gemacht haben.“\nArvo Iho überwachte auch die Restaurierung des von ihm mit moderner Handkamera und Originalton gedrehten Films.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/berlinale-classics-2025/202503014_1_RWD_1920.jpg",
-            "section": "Berlinale Classics",
-            "director": "Leida Laius,",
-            "link": "https://www.berlinale.de/de/2025/programm/202503014.html"
-          },
-          {
-            "title": "A natureza das coisas invisíveis",
-            "description": "Es ist Sommer, und die zehnjährige Gloria begleitet ihre Mutter Antônia, eine Krankenschwester, auf die Arbeit. Gloria kennt sich im Krankenhaus gut aus, sie erkundet es oft alleine. Eines Tages trifft sie die ebenfalls zehnjährige Sofia, die wegen ihrer Großmutter hier ist: Bisa Francisca, eine an Alzheimer erkrankte Seelenheilerin, wurde nach einem häuslichen Unfall hier eingeliefert. Sofia ist mit ihrer Mutter Simone uneins darüber, wie es mit Bisa weitergehen soll. Simone besteht darauf, dass sie vorerst im Krankenhaus bleibt; Sofia wünscht sich sehnlich, sie in das Haus der Familie auf dem Land zurückzubringen. Während Gloria und Sofia davon träumen, das Krankenhaus zu verlassen, freunden sich ihre Mütter – beide sind alleinerziehend – an und beginnen, einander zu unterstützen. Der Kreislauf von Tod und Wiedergeburt hat für Gloria, Sofia, Antônia und Simone eine tiefe Bedeutung. Als Bisas Abreise ansteht, übernimmt Antônia die palliative Pflege. Auf dem Land finden sie eine Gemeinschaft, die auf Bisa wartet und darauf vorbereitet ist, für die wandernden Seelen zu beten, damit sie weiterziehen können.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202504315_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Rafaela Camelo",
-            "link": "https://www.berlinale.de/de/2025/programm/202504315.html"
-          },
-          {
-            "title": "Ne réveillez pas l’enfant qui dort",
-            "description": "Diamant, ein 15-jähriges Mädchen aus Dakar, träumt davon, Filme zu machen. Doch ihre Familie hat andere Pläne für ihre Zukunft. Ohne Diamants Zustimmung werden Entscheidungen über ihr Leben getroffen. Diamant vertraut sich ihrer Schwester an; sie sehnt sich nach Ruhe und sucht nach einer Fluchtmöglichkeit. Am nächsten Morgen ist Diamant in einen unerklärlichen, tiefen Schlaf gefallen – Ausdruck des Widerstands gegen die ihr auferlegten Verpflichtungen. Ihr mysteriöser Schlummer wird zu einem stillen Akt des Trotzes, der Spannungen und Ängste schürt, bis er nicht nur Diamant selbst, sondern auch ihre Familie und ihr Zuhause bedroht.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202509154_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Kevin Aubert",
-            "link": "https://www.berlinale.de/de/2025/programm/202509154.html"
-          },
-          {
-            "title": "On a Sunday at Eleven",
-            "description": "Die siebenjährige Angel vollführt ihre sonntäglichen Rituale. Sie geht in einen Kosmetikladen, in dem überall weiße Schönheitsideale angepriesen werden, und besucht den Ballettunterricht, wo sie als einziges Schwarzes Mädchen heraussticht. Sie fühlt sich ausgeschlossen und flieht in eine Traumwelt, in der die Schwarzen Frauen, die ihr Leben begleiten, als Ballerinen mit aufwendigen Afro-Frisuren um sie herumtanzen. In ihrer Kirchengemeinde wird Angel dann von den Ältesten in die Mitte genommen. Hier fühlt sie sich akzeptiert und geliebt. Der Film zelebriert Schwarze Hairstyles und die Kraft, die für Schwarze Frauen in der spirituellen Verbindung zu den Vorfahr*innen steckt.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202503328_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Alicia K. Harris",
-            "link": "https://www.berlinale.de/de/2025/programm/202503328.html"
-          },
-          {
-            "title": "Only on Earth",
-            "description": "Der Süden Galiciens ist eines der am stärksten durch Waldbrände bedrohten Gebiete Europas. Seit Jahrhunderten leben Wildpferde hier in den Bergen. Sie spielen eine entscheidende Rolle bei der Brandverhütung, da sie das Unterholz niedrig halten. Doch ihre Zahl schwindet. Auf eindringliche und visuell beeindruckende Weise nimmt der Film die Zuschauer*innen mit in den heißesten Sommer seit Beginn der Wetteraufzeichnungen, in dem tagelang unlöschbare Waldbrände wüten. Der Feuerwehrmann San beschäftigt sich mit der Brandanalyse – ein Job, der ihn an die Frontlinien des Geschehens führt. Die warmherzige Tierärztin Eva arbeitet mit wilden und zahmen Pferden. Und der zehnjährige Pedro ist bereits ein angehender Cowboy. Der Film nimmt auch die Perspektive der Tiere ein, die den menschlichen Blick stets erwidern. Ein Film über das fragile Gleichgewicht in der Natur und über die Beziehung zwischen Mensch und Tier.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202503252_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Robin Petré",
-            "link": "https://www.berlinale.de/de/2025/programm/202503252.html"
-          },
-          {
-            "title": "Ornmol",
-            "description": "In der Region Kimberley in Westaustralien beschließt eine kleine Gemeinschaftsschule jeden Tag mit dem Joonba-Ritual, bei dem alle Kinder tanzen. Sie spüren darin eine Verbundenheit mit ihrer Kultur und dem Land, auf dem sie leben, die ihnen ein tiefes Vertrauen in sich selbst und ihre Umgebung schenkt. Ornmol begleitet die Kinder von Kupungarri beim Ockerfarbesammeln und bis zum Tanz auf einem der größten Ereignisse im Jahreslauf, dem Mowanjum-Fest. Die Vorfreude wächst von Tag zu Tag.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202503255_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Marlikka Perdrisat",
-            "link": "https://www.berlinale.de/de/2025/programm/202503255.html"
-          },
-          {
-            "title": "El paso",
-            "description": "In einem abgelegenen kubanischen Dorf spielen, angeln und lachen der elfjährige Fabián und der neunjährige Christian miteinander, ohne etwas von dem Drama zu ahnen, das die Erwachsenen in mondlosen Nächten erleben. Erst als sie, in der Dunkelheit versteckt, den Gesprächen der Erwachsenen lauschen, erfahren sie von den grauenhaften Vorfällen: Das Vieh verschwindet, und einige Bauern haben im Kampf gegen das, was auch immer da sein Unwesen treibt, sogar ihr Leben verloren. Wieder in ihre Spiele vertieft, werden die Kinder von einem Unbekannten überrascht, der sie einlädt, ihn auf einer nächtlichen Suche zu begleiten. Mit Laternen und Holzschwertern ausgestattet, werden sie auf die andere Seite der Lagune gebracht, an der sie leben. Dort beginnt ihre große Reise. Der anfänglichen Verspieltheit und Fantasie der Jungen tritt eine andere Realität gegenüber: Knochen, Feuer und völlige Dunkelheit verschmelzen in einem Ritual der Verwandlung, in dem die Grenzen zwischen Leben und Tod, Unschuld und Reife verschwimmen.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202513175_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Roberto Tarazona",
-            "link": "https://www.berlinale.de/de/2025/programm/202513175.html"
-          },
-          {
-            "title": "Paternal Leave",
-            "description": "Die 15-jährige Leo ist in Deutschland ohne Vater aufgewachsen. Als sie von seiner Identität erfährt, macht sie sich sofort auf die Suche nach ihm. Sie findet Paolo in einer verrammelten Strandbar an der winterlichen Küste Norditaliens. Ihn überwältigt und überfordert das Wiedersehen. Nach Leos plötzlichem Auftauchen hat er Mühe, seine Balance zwischen ihr und seiner neuen Familie zu finden. Zunächst will Leo nur Antworten, doch schon bald sehnt sie sich nach einem Platz in Paolos Leben. Da sie weder Geld noch einen Plan hat, bleibt sie erst mal in dem kleinen Ort. Je mehr Zeit sie miteinander verbringen, desto mehr Gemeinsamkeiten entdecken Leo und Paolo. Doch die Realität holt die beiden unweigerlich ein. Als Paolo sich wieder vermehrt seiner jüngeren Tochter zuwendet, reagiert Leo verletzt und wütend. Ein Streit bringt den Schmerz auf beiden Seiten ans Licht, ihre zarte Verbindung scheint zerstört. Mitten im Gefühlschaos beginnen Vater und Tochter, ihre jeweiligen Wahrheiten anzuerkennen, und machen einen kleinen, aber bedeutsamen Schritt in Richtung Akzeptanz.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202501646_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Alissa Jung",
-            "link": "https://www.berlinale.de/de/2025/programm/202501646.html"
-          },
-          {
-            "title": "Quaker",
-            "description": "In Brooklyn kommt eine Gruppe von Schüler*innen, die der Gemeinschaft der Quäker angehören, zu einem letzten Treffen vor ihrem Highschool-Abschluss zusammen. Reihum geben sie einander eine letzte Botschaft mit, die von den anderen schweigend entgegengenommen wird. Die Aussagen kommen von Herzen, handeln von Liebe, Freude und Hoffnung. Doch als eine Schülerin gesteht, dass sie sich nie mit ihren Klassenkamerad*innen verbunden gefühlt hat, nimmt das Treffen eine abrupte Wendung.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202500571_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Giovanna Molina",
-            "link": "https://www.berlinale.de/de/2025/programm/202500571.html"
-          },
-          {
-            "title": "Ran Bi Wa",
-            "description": "Dieser Film basiert auf einer alten Legende der Qiang, einer ethnischen Minderheit, die in den Bergen im Südwesten Chinas lebt. Er erzählt die Geschichte eines Affen, der unter Menschen aufwächst und den Spuren seiner Mutter Awubaji zum Heiligen Berg folgt, um das Geheimnis der Wärme aufzudecken. Nach vielen Entbehrungen und Gefahren bekommt er einen Feuerstein in die Hände. Dabei verbrennen seine Haare und er verwandelt sich schließlich in einen Menschen. Der Film ist im Stil der traditionellen chinesischen Tuschemalerei gehalten und zeigt auf poetische Weise das Leben in einer urgeschichtlichen Gesellschaft. Mit der Geschichte des Feuerdiebs greift er zeitlose Themen wie Wachstum und Kameradschaft auf, die auch in der heutigen Zeit noch bedeutend sind. Mit Ran Bi Wa feiert das legendäre Shanghai Animation Film Studio, die Wiege vieler chinesischer Kult-Animationsfilme, seine Rückkehr.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202507662_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Li Wenyu",
-            "link": "https://www.berlinale.de/de/2025/programm/202507662.html"
-          },
-          {
-            "title": "Ruse",
-            "description": "An einem regnerischen Nachmittag vertreiben sich Kavya und Tara die Zeit zu Hause bei ihrer Freundin Revati. Revatis Mutter ist nicht da, und der Nachmittag zieht sich in die Länge. Die drei Mädchen spielen Verstecken und durchstöbern den Schminktisch der Mutter, sie finden Lippenstifte und Schmuck und probieren sich damit aus. Schließlich beginnen sie, für einen Tanz zu proben, den sie sich gemeinsam ausgedacht haben. Dabei löst die körperliche Nähe ein Gefühl des Begehrens aus, für das sie noch keine Worte haben. Sie gehen mit dem Wissen auseinander, dass diese Erfahrung ein Geheimnis bleiben wird. Zurück bleibt ein Gefühl von Verwirrung über den diffusen Moment, in dem sie über ihre sexuelle Neugier gestolpert sind.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202515800_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Rhea Shukla",
-            "link": "https://www.berlinale.de/de/2025/programm/202515800.html"
-          },
-          {
-            "title": "Sous ma fenêtre, la boue",
-            "description": "Die 14-jährige Emma lebt bei ihrer Mutter Hélène. Ihre andere Mutter wohnt weit weg. Emma sieht sie nur selten, projiziert jedoch das Bild der perfekten Mutter auf sie, während sie Hélène mit Ablehnung und Feindseligkeit begegnet. Diese Rollenverteilung bietet ihr ein Gefühl von Orientierung. Ein Streit mit Hélène zwingt Emma dazu, solche Zuschreibungen infrage zu stellen. Hélène ihrerseits wird sich eigener widersprüchlicher Überzeugungen bewusst. Eine derartig emotionale Auseinandersetzung sind beide nicht (mehr) gewohnt. Unbeholfen beginnen sie, gemeinsam einen Weg aus dem Zwist zu suchen.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202509132_1_ORG.jpg",
-            "section": "Generation 14plus",
-            "director": "Violette Delvoye",
-            "link": "https://www.berlinale.de/de/2025/programm/202509132.html"
-          },
-          {
-            "title": "Space Cadet",
-            "description": "Robots einziges Ziel war es stets, Celeste zu der brillanten Wissenschaftlerin großzuziehen, die sie heute ist. Als die junge Astronautin zu ihrer ersten interstellaren Mission aufbricht, hat Robot niemanden mehr, um den er sich kümmern könnte. Er freut sich, dass Celeste endlich ihren Traum verwirklicht, und er weiß auch, dass sie eines Tages zurückkehren wird. Doch die Einsamkeit tut seinen alternden technischen Systemen nicht gut. Währenddessen sieht sich Celeste in den Weiten des Weltraums unerwarteten Gefahren ausgesetzt. Die Erinnerungen an ihre Kindheit weisen ihr jedoch einen Weg durch die Dunkelheit … Basierend auf der Graphic Novel von Kid Koala, ist Space Cadet eine musikalische Erzählung über Erinnerungen und die Bande, die uns zusammenhalten.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202511284_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Eric San (aka Kid Koala)",
-            "link": "https://www.berlinale.de/de/2025/programm/202511284.html"
-          },
-          {
-            "title": "Sunshine",
-            "description": "Die talentierte Turnerin Sunshine gilt als sichere Kandidatin für die Nationalmannschaft. Doch in der Woche der Probetrainings erfährt sie, dass sie schwanger ist. Damit stehen ihr Lebenstraum und ihr College-Stipendium auf dem Spiel. Sunshine zieht einen Schwangerschaftsabbruch in Betracht. Auf dem Weg zu einer Verkäuferin illegaler Abtreibungspillen begegnet sie einem mysteriösen Mädchen, das auf unheimliche Weise so spricht und denkt wie sie. Die Begegnung erschüttert Sunshine bis ins Mark, denn das Mädchen hinterfragt ihre Überzeugungen und zwingt sie, sich ihren Ängsten, Träumen und dem Ausmaß ihrer Entscheidungen zu stellen.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202501568_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Antoinette Jadaone",
-            "link": "https://www.berlinale.de/de/2025/programm/202501568.html"
-          },
-          {
-            "title": "Tales from the Magic Garden",
-            "description": "Die Geschwister Tom, Suzanne und Derek übernachten zum ersten Mal allein bei ihrem Großvater, der sich seit dem Tod ihrer Großmutter ein wenig zurückgezogen hat. Es ist für sie alle eine schwierige Zeit. Doch als Suzanne in die Rolle der Geschichtenerzählerin schlüpft, genau wie ihre Großmutter es immer getan hat, füllt sich das Haus mit magischen Abenteuern, Humor und Fantasie. Es ist eine lieb gewonnene Familientradition, dass jede*r ein eigenes Element zu den Erzählungen beisteuert, und so entdecken alle die heilende Kraft des Geschichtenerzählens wieder. Freude und Lachen kehren ins Haus zurück, die Kinder und ihr Großvater rücken näher zusammen und schöpfen Trost aus ihren gemeinsamen Erinnerungen. Eine Stop-Motion-Animation darüber, wie wir mit Liebe und Fantasie die Herausforderungen des Lebens meistern können.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202511852_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "David Súkup,",
-            "link": "https://www.berlinale.de/de/2025/programm/202511852.html"
-          },
-          {
-            "title": "Têtes brûlées",
-            "description": "Die zwölfjährige Eya wächst in einer tunesisch-muslimischen Familie in Brüssel auf. Zu ihrem 25-jährigen Bruder Younès hat sie eine enge Beziehung. Eya verbringt ihre Tage an seiner Seite und im Kreise einer Gruppe von Younès’ Freund*innen, die sie als eine der Ihren betrachten. Als Younès plötzlich stirbt, bricht für Eya eine Welt zusammen. In dem streng ritualisierten Trauerprozess nimmt sie sowohl die Solidarität der Gemeinschaft wahr, die sich um ihre Familie schart, als auch das Schweigen, das die einzelnen Beteiligten in ihrem Kummer isoliert. Eya muss einen eigenen Weg suchen, um ihre Trauer zu bewältigen. Ihre Kreativität, die Verbindung zu den Freund*innen ihres Bruders und vor allem ihr Glaube helfen ihr dabei. Ein zärtliches und nuanciertes Porträt einer multikulturellen und solidarischen Jugend.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202517000_1_ORG.jpg",
-            "section": "Generation 14plus",
-            "director": "Maja-Ajmia Yde Zellama",
-            "link": "https://www.berlinale.de/de/2025/programm/202517000.html"
-          },
-          {
-            "title": "Uiksaringitara",
-            "description": "Vor 4000 Jahren in der kanadischen Arktis: Kaujak und Sapa sind einander bei ihrer Geburt versprochen worden und haben seit jeher eine aufrichtige, liebevolle Beziehung zueinander. Nach dem plötzlichen Tod von Kaujaks Vater wird ihre Verbindung jedoch gelöst. Sapa ist auf der Jagd, als Kaujaks Mutter einen neuen Mann heiratet und mit Kaujak in dessen Familienlager umzieht. Dort wird das Leben bald zum Albtraum. Aggressive Freier, die von einem dämonischen Schamanen unterstützt werden, werben um Kaujaks Hand. Sie lehnt alle ab, obwohl ihre Hoffnung, dass Sapa zurückkehrt und die Dinge wieder in Ordnung bringt, zu schwinden beginnt. Doch auch Sapa hat einen Schamanen an seiner Seite: Ulluriaq kanalisiert geistige Helfer*innen, die Sapa auf seinem Weg zu Kaujak leiten und beschützen. Ein bildgewaltiges arktisches Märchen von Zacharias Kunuk, einem Pionier des indigenen Kinos.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202507429_1_ORG.jpg",
-            "section": "Generation 14plus",
-            "director": "Zacharias Kunuk",
-            "link": "https://www.berlinale.de/de/2025/programm/202507429.html"
-          },
-          {
-            "title": "Umibe é Iku Michi",
-            "description": "Ein Küstenstädtchen mit langjährigen Bewohner*innen aller Altersgruppen und Geschlechter lockt neuerdings Künstler*innen an, die sich für ein Projekt in der Gegend interessieren. Seltsame Vorfälle ereignen sich, naive Erwachsene treffen auf schlaue Kinder, das Meer und der Himmel schimmern im Licht. Mittelstufenschüler Sosuke fällt das Leben leicht, er wird angetrieben von der Freude am Schaffen. Im hellen Sonnenschein verändert sich zusammen mit Sosuke auch die zweite Hauptfigur: die Stadt. Wie ein unruhiges Kind bleibt sie ständig in Bewegung. Niemand ist perfekt. Aber alle haben die Fähigkeit, andere zu lieben. Während die Kinder unermüdlich versuchen, die vor ihnen liegenden Aufgaben zu lösen, wollen die Erwachsenen vor allem ihre Existenz ergründen. Eine Sammlung von Vignetten aus einem unvergesslichen Sommer, in denen jede Figur liebenswert und von einer Zärtlichkeit erfüllt ist, die zu Herzen geht.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202506669_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Satoko Yokohama",
-            "link": "https://www.berlinale.de/de/2025/programm/202506669.html"
-          },
-          {
-            "title": "Village Rockstars 2",
-            "description": "Dhunu lebt in einem kleinen Dorf in Assam, Indien, und träumt davon, Musikerin zu werden. Ihre Mutter teilt ihre Leidenschaft und ermutigt sie, ihren Traum zu verfolgen. Dhunus langjährige Freund*innen haben die Musik aufgegeben und beschäftigen sich inzwischen mit anderen Dingen, doch Dhunu schließt sich mit anderen angehenden Musiker*innen in ihrem Alter zusammen und tritt mit einer lokalen Band auf. Eine unerwartete Wendung der Ereignisse zwingt sie, plötzlich erwachsen zu werden und sich den harten Realitäten des Lebens zu stellen. Sie übernimmt Verantwortung für ihre Familie und ihr eigenes Leben, verliert aber die Musik nicht aus den Augen. Während sie neue, zum Teil unsichere Wege beschreitet, findet Dhunu Trost bei ihrer Mutter, in der Natur und in der Musik. In ihrem neuen Film nimmt Rima Das nach sieben Jahren die Fährte ihrer Charaktere aus Village Rockstars wieder auf und folgt Dhunu auf der Suche nach ihrer eigenen Melodie und einem neuen Sinn im Leben – eine Reise voller Wandlungen.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202506997_1_ORG.jpg",
-            "section": "Generation 14plus",
-            "director": "Rima Das",
-            "link": "https://www.berlinale.de/de/2025/programm/202506997.html"
-          },
-          {
-            "title": "Wish You Were Ear",
-            "description": "In einer Welt, in der Ex-Partner*innen nach der Trennung einen ausgewählten Körperteil miteinander tauschen müssen, hinterlässt jede beendete Beziehung sichtbare Spuren: Man verliert nicht nur ein Stück von sich selbst, sondern trägt fortan auch ein Fragment der vergangenen Liebe mit sich. Der*ie Protagonist*in fühlt sich unvollständig, ja entstellt, und sehnt sich nach ihrer*seiner ursprünglichen Gestalt. Die Begegnung mit einer Person, die ihr*sein ehemaliges Ohr trägt, eröffnet einen Weg, sich zu akzeptieren. Eine Reflexion darüber, wie Beziehungen uns verändern, unsere Identität und unser Selbstbild prägen – ob wir das wollen oder nicht.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202513432_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Mirjana Balogh",
-            "link": "https://www.berlinale.de/de/2025/programm/202513432.html"
-          },
-          {
-            "title": "Zečji nasip",
-            "description": "Marko lebt mit seinen Eltern und seinem jüngeren Bruder Fićo, dem er sehr zugetan ist, in einem kroatischen Dorf. Er ist ein begabter Sportler, hat aber vor, nach seinem Schulabschluss den Plänen seines Vaters zu folgen und Automechaniker zu werden. Zwei Ereignisse bringen sein scheinbar stabiles Leben aus dem Gleichgewicht: Das Dorf wird von einer Überschwemmung bedroht, und seine heimliche erste Liebe, Slaven, kommt zurück in die Heimat, um seinen Vater zu beerdigen. Marko bemüht sich, seine ganze Aufmerksamkeit auf seine Freundin Petra und ein anstehendes Turnier zu richten. Doch je näher die Fluten rücken, desto größer werden auch seine emotionalen Turbulenzen. Während die Dorfbewohner*innen unermüdlich daran arbeiten, Mauern aus Sandsäcken um ihre Häuser zu errichten, baut Marko seine eigene Mauer – eine, die seine Gefühle in Schach halten soll. Doch wie Wasser haben auch Gefühle einen Weg, alle Dämme zu durchbrechen ...",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202503115_1_RWD_1920.jpg",
-            "section": "Generation 14plus",
-            "director": "Čejen Černić Čanak",
-            "link": "https://www.berlinale.de/de/2025/programm/202503115.html"
-          },
-          {
-            "title": "Zhi Wu Xue Jia",
-            "description": "In einem abgelegenen Dorf in einem Tal an der nördlichen Grenze von Xinjiang, China, hängt der einsame kasachische Junge Arsin Erinnerungen an seine Familie nach. Trost findet er in der Beobachtung der Natur. Die Ankunft von Meiyu, einem Han-chinesischen Mädchen, wirkt auf ihn wie die Entdeckung einer Pflanze, die er noch nie zuvor gesehen hat – neben etwas Tröstlichem ist da ein seltsames Gefühl der Verwunderung. Gemeinsam wachsen die Kinder heran wie zwei verschiedene Gewächse, die Wurzeln in demselben Fleckchen Erde geschlagen haben. Das Tal stellen sie sich als ein endloses Meer vor. Eines Tages erfährt Arsin, dass Meiyu in das 4792 Kilometer entfernte Shanghai umziehen wird – eine Entfernung, die sich kaum begreifen lässt. Sie geht in eine Stadt, die tatsächlich am Meer liegt. Nun ist es ihm allein überlassen, die leisen Veränderungen in ihrer kleinen, zerbrechlichen Welt zu beobachten.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202501604_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Jing Yi",
-            "link": "https://www.berlinale.de/de/2025/programm/202501604.html"
-          },
-          {
-            "title": "Zirkuskind",
-            "description": "Santino ist ein Zirkuskind. Mit seiner Familie und den Tieren zieht er im Wohnwagen durchs Land – heute hier, morgen dort. Zuhause ist für ihn kein fester Ort, sondern das sind seine Eltern Angie und Gitano, sein Bruder Giordano, unzählige Onkel und Tanten, Cousinen und Cousins und ganz besonders sein Uropa Ehe, einer der letzten großen Zirkusdirektoren Deutschlands. Ehe erzählt Santino wilde Geschichten aus seinem langen Leben: vom prachtvollen Elefantenbullen Sahib, seinen eigenen ersten Schritten als Clown und dem Freiheitsgefühl, für das es sich lohnt, alle Strapazen in Kauf zu nehmen. An Santinos elftem Geburtstag stellt Ehe die Frage, was Santino denn einmal in der Manege zeigen möchte, schließlich müsse auch er etwas zu ihrer Gemeinschaft beitragen. Doch wie findet man das nur heraus? Zirkuskind erzählt aus dem Leben der letzten Nomad*innen in Deutschland. Vom Aufwachsen in der Großfamilie, mit den Tieren, und einem Leben ohne Netz und doppelten Boden. Ein dokumentarisches, mit Animationen versehenes Roadmovie über die Kraft von Zugehörigkeit und Gemeinschaft.",
-            "image": "https://www.berlinale.de/media/filmstills/2025/generation-2025/202504318_1_RWD_1920.jpg",
-            "section": "Generation Kplus",
-            "director": "Julia Lemke,",
-            "link": "https://www.berlinale.de/de/2025/programm/202504318.html"
-          }
-        ]
-        ';
-        
-        $films = json_decode($text_input, true); 
+    var_dump("from berlinale str22ings");
 
-        var_dump($films);
-
-        foreach ($films as $film) {
-
-            // Prepare the post data
-            $post_data = array(
-                'post_title'    => wp_strip_all_tags($film['title']),
-                'post_content'  => $film['description'],
-                'post_status'   => 'publish',
-                'post_type'     => 'Film',
-                // Custom meta fields
-                'meta_input'    => array(
-                    'director' => $film['director'],
-                    'berlinale_link' => $film['link']
-                )
-                // Add more fields as needed
-            );
-
-            // Insert the post into the database
-            $post_id = wp_insert_post($post_data);
-
-            // Check if the post was created successfully
-            if ($post_id && !is_wp_error($post_id) && !is_wp_error($post_id)) {
-                // Determine the section based on the film's section
-                $section = $film['section'] === 'Generation Kplus' ? 'k' : '14';
-
-                // Set the 'Section' taxonomy for the post
-                wp_set_object_terms($post_id, $section, 'section', false);
-
-                // Download and attach the image to the post
-                if (!empty($film['image'])) {
-                    // Download the image
-                    $media = media_sideload_image($film['image'], $post_id);
-
-                    // Check if the image was downloaded successfully
-                    if (!is_wp_error($media)) {
-                        // Get the id of the attachment
-                        $attachments = get_posts(array(
-                            'post_type' => 'attachment',
-                            'posts_per_page' => 1,
-                            'post_status' => 'any',
-                            'post_parent' => $post_id
-                        ));
-
-                        // Check if the attachment was found
-                        if ($attachments) {
-                            // Set the post thumbnail (featured image)
-                            set_post_thumbnail($post_id, $attachments[0]->ID);
-                        }
-                    }
-                }
-
-                $imported++;
-            } else {
-                $errors++;
-            }
-        }
-
-        // Display a success or error notice
-        add_action('admin_notices', function() use ($imported, $errors) {
-            if ($errors > 0) {
-                echo '<div class="notice notice-error is-dismissible">';
-                echo '<p>' . sprintf('Import completed with %s errors.', $errors) . '</p>';
-                echo '</div>';
-            } else {
-                echo '<div class="notice notice-success is-dismissible">';
-                echo '<p>' . sprintf('Successfully imported %s films.', $imported) . '</p>';
-                echo '</div>';
-            }
+// 2. DEPENDENCY CHECK (Corrected)
+    // Check if the main WPML constant is defined
+    if ( ! defined( 'ICL_SITEPRESS_VERSION' ) ) {
+        add_action('admin_notices', function() {
+            echo '<div class="notice notice-error"><p>Import aborted: WPML is not active.</p></div>';
         });
+        return;
+    }
+
+    var_dump("from berlinale 333strings");
+
+    $imported = 0;
+
+    foreach ($films as $film) {
+
+        // --- Step A: Parse Data ---
+        $titles     = get_film_titles($film);
+        $tax_slug   = ($film['section'] === 'Generation Kplus') ? 'k' : '14';
+        $image_url  = $film['image'];
+
+        // --- Step B: Create English Post (Source) ---
+        $id_en = insert_film_post([
+            'title'   => $titles['en'],
+            'content' => $film['description_en'],
+            'meta'    => [
+                'director'          => $film['director'],
+                'berlinale_link'    => $film['link_en'],
+                'title_original_raw'=> $film['title_original'],
+            ]
+        ], 'en');
+
+        if ( ! $id_en ) continue; // Skip if failed
+
+        // --- Step C: Create German Post (Translation) ---
+        // Get the "Translation Group ID" (trid) from the English post we just made
+        $trid = apply_filters( 'wpml_element_trid', NULL, $id_en, 'post_film' );
+
+        $id_de = insert_film_post([
+            'title'   => $titles['de'],
+            'content' => $film['description'],
+            'meta'    => [
+                'director'          => $film['director'],
+                'berlinale_link'    => $film['link'],
+                'title_original_raw'=> $film['title_original'],
+            ]
+        ], 'de', $trid); // <--- Pass TRID to link them!
+
+        // --- Step D: Assign Shared Assets (Taxonomies & Images) ---
+        if ( $id_de ) {
+            // Assign Categories (Handles language mapping internally)
+            assign_film_category( $id_en, $tax_slug, 'en' );
+            assign_film_category( $id_de, $tax_slug, 'de' );
+
+            // Handle Image (Downloads once, attaches to both)
+            attach_film_image( $image_url, $id_en, $id_de );
+
+            $imported++;
+        }
+    }
+
+    // Feedback
+    add_action('admin_notices', function() use ($imported) {
+        echo '<div class="notice notice-success is-dismissible"><p>Imported ' . $imported . ' films.</p></div>';
+    });
 }
-?>
+
+/**
+ * Helper: Insert Post & Force Language
+ * Removes the need to switch global context repeatedly.
+ */
+function insert_film_post( $data, $lang_code, $trid = null ) {
+
+    // 1. Insert standard WP Post
+    $post_id = wp_insert_post([
+        'post_title'   => $data['title'],
+        'post_content' => $data['content'],
+        'post_status'  => 'publish',
+        'post_type'    => 'film', // ensure lowercase 'film'
+        'meta_input'   => $data['meta']
+    ]);
+
+    if ( is_wp_error($post_id) ) return false;
+
+    // 2. Explicitly set WPML Language Info
+    // This overwrites whatever language WP assigned by default
+    $element_type = apply_filters( 'wpml_element_type', 'film' );
+
+    do_action( 'wpml_set_element_language_details', [
+        'element_id'           => $post_id,
+        'element_type'         => $element_type,
+        'trid'                 => $trid, // Null for English, Valid ID for German
+        'language_code'        => $lang_code,
+        'source_language_code' => $trid ? 'en' : null // Source is EN if we have a TRID
+    ]);
+
+    return $post_id;
+}
+
+/**
+ * Helper: Parse Titles based on logic
+ */
+function get_film_titles( $film ) {
+    $en = $film['title_original'];
+    $de = $film['title_original']; // Default
+
+    if ( ! empty( $film['title_de_en'] ) ) {
+        if ( strpos( $film['title_de_en'], '|' ) !== false ) {
+            $parts = explode( '|', $film['title_de_en'] );
+            $de = trim( $parts[1] );
+        } else {
+            $de = $film['title_de_en'];
+        }
+    }
+    return ['en' => $en, 'de' => $de];
+}
+
+/**
+ * Helper: Assign Category safely by Language
+ * Clean version: Uses 'suppress_filters' to find the term without switching languages.
+ */
+function assign_film_category( $post_id, $slug, $lang ) {
+
+    // 1. Find the term by slug, ignoring the current active language
+    $terms = get_terms( array(
+        'taxonomy'         => 'section',
+        'slug'             => $slug,
+        'hide_empty'       => false,
+        'suppress_filters' => true, // <--- The magic key: ignores WPML context
+        'number'           => 1
+    ) );
+
+    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+        // We found a term (it could be the English or German one, doesn't matter yet)
+        $found_term_id = $terms[0]->term_id;
+
+        // 2. Ask WPML for the ID in the target language ($lang)
+        // This filter is smart: It takes *any* ID from the translation group
+        // and returns the correct ID for the requested language code.
+        $final_term_id = apply_filters( 'wpml_object_id', $found_term_id, 'section', false, $lang );
+
+        // 3. Assign it
+        if ( $final_term_id ) {
+            wp_set_object_terms( $post_id, (int)$final_term_id, 'section' );
+        }
+    }
+}
+
+/**
+ * Helper: Handle Image Upload/Check
+ */
+function attach_film_image( $url, $id_en, $id_de ) {
+    if ( empty($url) ) return;
+
+    // 1. Check if image exists in DB (Custom SQL for speed)
+    global $wpdb;
+    $file_name = basename($url);
+    $att_id = $wpdb->get_var( $wpdb->prepare(
+        "SELECT ID FROM $wpdb->posts WHERE post_type = 'attachment' AND guid LIKE %s LIMIT 1",
+        '%' . $wpdb->esc_like($file_name)
+    ));
+
+    // 2. If not, download it
+    if ( ! $att_id ) {
+        if ( ! function_exists( 'media_sideload_image' ) ) {
+            require_once( ABSPATH . 'wp-admin/includes/media.php' );
+            require_once( ABSPATH . 'wp-admin/includes/file.php' );
+            require_once( ABSPATH . 'wp-admin/includes/image.php' );
+        }
+        $new_id = media_sideload_image( $url, $id_en, null, 'id' );
+        if ( ! is_wp_error($new_id) ) $att_id = $new_id;
+    }
+
+    // 3. Attach to both posts
+    if ( $att_id ) {
+        set_post_thumbnail( $id_en, $att_id );
+        set_post_thumbnail( $id_de, $att_id );
+    }
+}
+

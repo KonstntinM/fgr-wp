@@ -14,6 +14,7 @@ services:
     volumes:
       - wordpress:/var/www/html
       - ../fgr-theme:/var/www/html/wp-content/themes/fgr-theme
+      - ../fgr-plugin:/var/www/html/wp-content/plugins/fgr-plugin
       - ../tp-wpml-migration-plugin:/var/www/html/wp-content/plugins/tp-wpml-migration-plugin
     networks:
       - fgr-network

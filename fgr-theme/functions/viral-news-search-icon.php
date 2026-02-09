@@ -14,9 +14,9 @@ function viral_news_search_icon()
 ?>
     <div class="fgr-right-header">
         <div style="display: inline-flex; gap: 10px; align-items: center;" data-no-translation>
-            <div class="wpml-floating-language-switcher">
-                <?php do_action('wpml_add_language_selector'); ?>
-            </div>
+
+            <?php get_template_part('template-parts/language-switcher-links'); ?>
+
             <div class="vn-header-search">
                 <span <?php echo viral_news_amp_search_toggle(); ?>><i class="mdi-magnify"></i></span>
             </div>

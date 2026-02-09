@@ -19,7 +19,7 @@ function artikel_zu_film()
     $query = new WP_Query($args);
 
     if (!$query->have_posts()) {
-        echo '<h3>Bisher haben wir nicht zu diesem Film veröffentlicht.</h3>';
+        echo '<h3>' . __( 'There are no posts about this film on our site yet. Check back soon!', 'fgr-theme' ) . '</h3>';
         return;
     }
 ?>
@@ -27,7 +27,9 @@ function artikel_zu_film()
 
     <nav class="navigation post-navigation" role="navigation" style="padding-top: 1.5rem; padding-bottom: 1.5rem;">
         <h3 style="display: block;">
-            Unsere Beiträge zu 
+            <?php
+                _e('Our posts about', 'fgr-theme');
+            ?>
             <strong>
                 <?php
                     echo get_the_title();

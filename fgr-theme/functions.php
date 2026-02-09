@@ -22,6 +22,7 @@ function child_theme_enqueue_styles() {
         array($parent_style),
         filemtime(get_stylesheet_directory() . '/style.css') // Version based on file modification time to ensure cache busting
     );
+    // Single Film Styles
+    wp_enqueue_style('single-film', get_stylesheet_directory_uri() . '/single-film.css');
 }
 add_action('wp_enqueue_scripts', 'child_theme_enqueue_styles');
-

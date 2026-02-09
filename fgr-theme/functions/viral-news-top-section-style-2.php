@@ -76,7 +76,9 @@ function viral_news_top_section_style2($args) {
         </div>
         <div class="read-more-wrapper">
             <a href="<?php echo get_permalink(get_page_by_path('neues')->ID) ?>" class="read-more-item">
-                Alle Artikel
+                <?php
+                    _e('All Posts', 'fgr-theme');
+                ?>
             </a>
         </div>
         <style>
