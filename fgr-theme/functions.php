@@ -24,5 +24,13 @@ function child_theme_enqueue_styles() {
     );
     // Single Film Styles
     wp_enqueue_style('single-film', get_stylesheet_directory_uri() . '/single-film.css');
+
+    wp_enqueue_script(
+        'child-menu-fix',
+        get_stylesheet_directory_uri() . '/js/menu-fix.js',
+        array('jquery', 'viral-news-custom'),
+        '1.0',
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 'child_theme_enqueue_styles');

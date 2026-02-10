@@ -9,5 +9,10 @@
 
   "remoteUser": "developer",
   "updateRemoteUserUID": true,
-  "postCreateCommand": "sh .devcontainer/wordpress-container-setup.sh"
+  "postCreateCommand": "sh .devcontainer/wordpress-container-setup.sh",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installGit": true
+    }
+  }
 }
